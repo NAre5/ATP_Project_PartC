@@ -1,5 +1,8 @@
 package View.Intro;
 
+import View.AView;
+import View.IView;
+import ViewModel.ViewModel;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -12,12 +15,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class IntroView implements Initializable {
+public class IntroView extends AView implements Observer,Initializable {
     private Media media;
 //    private Media media = new Media("../resources/music/PokemonRedBlue(TrapRemix).mp3");
-    private MediaPlayer mediaPlayer;
+
     public static Scene newOne;
 
     @Override
@@ -32,8 +37,7 @@ public class IntroView implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+        this.viewModel.replace_music(media);
         //set loop infinity
     }
 
@@ -45,7 +49,7 @@ public class IntroView implements Initializable {
 
     public void MC(MouseEvent mouseEvent) {
         System.out.println("beep beep I am a sheep");
-        mediaPlayer.dispose();
+//        mediaPlayer.dispose();
         try {
             Parent mainPage = FXMLLoader.load(getClass().getResource(""));
 //            Parent mainPage = FXMLLoader.load(getClass().getResource("../Start/StartView.fxml"));
@@ -59,5 +63,12 @@ public class IntroView implements Initializable {
             System.out.println();
         }
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        /*
+        not done yet
+         */
     }
 }

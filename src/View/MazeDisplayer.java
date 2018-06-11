@@ -1,5 +1,9 @@
 package View;
 
+import algorithms.mazeGenerators.Position;
+import algorithms.search.AState;
+import algorithms.search.MazeState;
+import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -8,6 +12,7 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Created by Aviadjo on 3/9/2017.
@@ -64,11 +69,41 @@ public class MazeDisplayer extends Canvas {
                 //Draw Character
                 //gc.setFill(Color.RED);
                 //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
-                gc.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+                gc.drawImage(characterImage, characterPositionColumn * cellWidth, characterPositionRow * cellHeight, cellWidth, cellHeight);
             } catch (FileNotFoundException e) {
                 //e.printStackTrace();
             }
         }
+    }
+
+    public void drawSolution(Solution solution) throws Exception {
+        if (solution != null) {
+            double canvasHeight = getHeight();
+            double canvasWidth = getWidth();
+            double cellHeight = canvasHeight / maze.length;
+            double cellWidth = canvasWidth / maze[0].length;
+
+            ArrayList<AState> SolutionPath = solution.getSolutionPath();
+            try {
+                Image SolutionImage = new Image(new FileInputStream(ImageFileNameWall.get()));////////////
+
+                GraphicsContext gc = getGraphicsContext2D();
+//                gc.clearRect(0, 0, getWidth(), getHeight());
+
+                //Draw Maze
+                for (int i = 0; i < SolutionPath.size()-1; i++) {
+                    Position p;
+                    if (SolutionPath.get(i) instanceof MazeState)
+                        p=((MazeState)SolutionPath.get(i)).getCurrent_position();
+                    else
+                        throw new Exception("Solution State should be MazeState");
+                    gc.drawImage(SolutionImage, p.getColumnIndex() * cellWidth, p.getRowIndex() * cellHeight, cellWidth, cellHeight);
+                }
+            } catch (FileNotFoundException e) {
+                //e.printStackTrace();
+            }
+        }
+
     }
 
     //region Properties
