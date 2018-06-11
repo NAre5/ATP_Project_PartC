@@ -30,14 +30,14 @@
          <children>
             <Label text="Maze row:" />
             <Label text="Maze column:" GridPane.rowIndex="2" />
-            <TextField fx:id="text_rowNum" onInputMethodTextChanged="#ValidNumber" promptText="Insert row size" GridPane.columnIndex="1" />
-            <TextField fx:id="text_columnNum" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="text_rowNum" onKeyPressed="#ValidNumber" promptText="Insert row size" GridPane.columnIndex="1" />
+            <TextField fx:id="text_columnNum" onKeyPressed="#ValidNumber" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Button fx:id="next" ellipsisString="" layoutX="264.0" layoutY="375.0" mnemonicParsing="false" onAction="#StartGame" prefHeight="25.0" prefWidth="74.0" text="next" />
       <ImageView disable="true" fitHeight="210.0" fitWidth="342.0" layoutX="149.0" layoutY="40.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
-            <Image url="@Welcome.jpg" />
+            <Image url="@/View/NEW/Welcome.jpg" />
          </image>
          <viewport>
             <Rectangle2D minX="4.0" minY="5.0" />

@@ -19,7 +19,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class IntroView extends AView implements Observer,Initializable {
+public class IntroView extends AView implements Initializable {
     private Media media;
 //    private Media media = new Media("../resources/music/PokemonRedBlue(TrapRemix).mp3");
 
@@ -27,17 +27,6 @@ public class IntroView extends AView implements Observer,Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        media = null;
-        try {
-            String mediaFilePath;
-            mediaFilePath = ClassLoader.getSystemResource("music/PokemonRedBlue.mp3").toURI().toString();
-//            mediaFilePath = Paths.get(ClassLoader.getSystemResource("PokemonRedBlue.mp3").toURI()).toString();
-//            mediaFilePath = "../resources/music/PokemonRedBlue.mp3";
-            media = new Media(mediaFilePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.viewModel.replace_music(media);
         //set loop infinity
     }
 
@@ -70,5 +59,20 @@ public class IntroView extends AView implements Observer,Initializable {
         /*
         not done yet
          */
+    }
+
+    @Override
+    protected void init() {
+        media = null;
+        try {
+            String mediaFilePath;
+            mediaFilePath = ClassLoader.getSystemResource("music/PokemonRedBlue.mp3").toURI().toString();
+//            mediaFilePath = Paths.get(ClassLoader.getSystemResource("PokemonRedBlue.mp3").toURI()).toString();
+//            mediaFilePath = "../resources/music/PokemonRedBlue.mp3";
+            media = new Media(mediaFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.viewModel.replace_music(media);
     }
 }
