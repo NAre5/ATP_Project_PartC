@@ -1,10 +1,16 @@
 package ViewModel;
 
 import Model.IModel;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.net.URISyntaxException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +24,8 @@ public class ViewModel extends Observable implements Observer {
     private int characterPositionRowIndex;
     private int characterPositionColumnIndex;
 
+    public MediaPlayer mediaPlayer;
+
     public StringProperty characterPositionRow = new SimpleStringProperty("1"); //For Binding
     public StringProperty characterPositionColumn = new SimpleStringProperty("1"); //For Binding
 
@@ -28,14 +36,35 @@ public class ViewModel extends Observable implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o==model){
+            //arg is Maze
             characterPositionRowIndex = model.getCharacterPositionRow();
             characterPositionRow.set(characterPositionRowIndex + "");
             characterPositionColumnIndex = model.getCharacterPositionColumn();
             characterPositionColumn.set(characterPositionColumnIndex + "");
+            if (model.getGoalPosition().equals(new Position(characterPositionRowIndex,characterPositionColumnIndex)))
+            {
+
+
+                try {
+                    replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                showAlert("finished!!!");
+            }
             setChanged();
             notifyObservers();
         }
     }
+
+    public void replace_music(Media media)
+    {
+//        mediaPlayer.dispose();
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+    }
+
+
 
     public void generateMaze(int width, int height){
         model.generateMaze(width, height);
@@ -55,5 +84,15 @@ public class ViewModel extends Observable implements Observer {
 
     public int getCharacterPositionColumn() {
         return characterPositionColumnIndex;
+    }
+
+    public Solution solveMaze() {
+        return model.getMazeSolution();
+    }
+
+    private void showAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 }

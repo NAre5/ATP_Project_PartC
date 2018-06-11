@@ -1,5 +1,7 @@
 package Model;
 
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -11,4 +13,6 @@ public interface IModel {
     int[][] getMaze();
     int getCharacterPositionRow();
     int getCharacterPositionColumn();
+    Solution getMazeSolution();
+    Position getGoalPosition();
 }

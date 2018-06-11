@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.*?>
+<?import View.MazeDisplayer?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Options">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Properties" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Exit">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="About">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="View.MainPage.MainView" onKeyPressed="#KeyPressed">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New"/>
+                        <MenuItem mnemonicParsing="false" text="Save"/>
+                        <MenuItem mnemonicParsing="false" text="Load"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Properties"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Exit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="About">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <MazeDisplayer fx:id="mazeDisplayer"/>
+    </center>
+    <left>
+        <Button fx:id="Solve" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" onAction="#solveMaze" text="Button" BorderPane.alignment="CENTER"/>
+    </left>
 </BorderPane>
