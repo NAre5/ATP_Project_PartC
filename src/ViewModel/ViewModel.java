@@ -5,6 +5,7 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
@@ -19,15 +20,14 @@ import java.util.Observer;
  */
 public class ViewModel extends Observable implements Observer {
 
+    public MediaPlayer mediaPlayer;
+    public StringProperty characterPositionRow = new SimpleStringProperty("1"); //For Binding
+    public StringProperty characterPositionColumn = new SimpleStringProperty("1"); //For Binding
     private IModel model;
-
     private int characterPositionRowIndex;
     private int characterPositionColumnIndex;
 
-    public MediaPlayer mediaPlayer;
-
-    public StringProperty characterPositionRow = new SimpleStringProperty("1"); //For Binding
-    public StringProperty characterPositionColumn = new SimpleStringProperty("1"); //For Binding
+    private Scene scene;
 
     public ViewModel(IModel model){
         this.model = model;
@@ -94,5 +94,9 @@ public class ViewModel extends Observable implements Observer {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(alertMessage);
         alert.show();
+    }
+
+    private void raise_NEW(){
+
     }
 }

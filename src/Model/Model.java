@@ -5,7 +5,7 @@ import IO.MyDecompressorInputStream;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
+import Client.IClientStrategy;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.Solution;
@@ -20,8 +20,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import Server.Server;
-
+import Server.*;
 /**
  * Created by Aviadjo on 6/14/2017.
  */
@@ -59,7 +58,7 @@ public class Model extends Observable implements IModel {
 
         threadPool.execute(() -> {
             try {
-                Client client = new Client(InetAddress.getLocalHost(), 5400, new Client.IClientStrategy() {
+                Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
                     @Override
                     public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                         try {
@@ -137,7 +136,7 @@ public class Model extends Observable implements IModel {
 
         threadPool.execute(() -> {
             try {
-                Client client = new Client(InetAddress.getLocalHost(), 5401, new Client.IClientStrategy() {
+                Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
                     public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                         try {
                             ObjectOutputStream toServer = new ObjectOutputStream(outToServer);

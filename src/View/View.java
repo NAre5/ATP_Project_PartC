@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
 
-public class View implements Observer, View.IViewt {
+public class View implements Observer, IViewt {
 
     @FXML
     private ViewModel viewModel;
