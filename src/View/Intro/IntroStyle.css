@@ -1,0 +1,5 @@
+.root {
+    /*-fx-background-image: url("../../../resources/Images/200.gif");*/
+    -fx-background-image: url("Intro.gif");
+    -fx-background-size: stretch;
+}

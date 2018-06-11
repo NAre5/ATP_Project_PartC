@@ -1,0 +1,17 @@
+.root {
+    /*-fx-background-image: url("../../../resources/Images/200.gif");*/
+    -fx-background-image: url("PikachuWalk.gif");
+    -fx-background-size: stretch;
+    height: 100%;
+}
+
+Button {
+    /*-fx-cell-size: 26px;*/
+    height: 33%;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
