@@ -2,6 +2,7 @@ package View;
 
 import ViewModel.ViewModel;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Observer;
 
-public abstract class AView implements IView, Observer {
+public abstract class AView implements IView, Observer,Initializable {
 
     protected ViewModel viewModel;
     protected Scene currentscene;
@@ -30,16 +31,6 @@ public abstract class AView implements IView, Observer {
         alert.show();
     }
 
-    protected void switchScene(Stage primaryStage, String sceneName) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource( sceneName + "View.fxml").openStream());
-            Scene scene = new Scene(root, 800, 700);
-            scene.getStylesheets().add(getClass().getResource(sceneName + "Style.css").toExternalForm());
-            primaryStage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 }

@@ -1,9 +1,12 @@
 package ViewModel;
 
 import Model.IModel;
+import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,16 +29,17 @@ import java.util.Observer;
 public class ViewModel extends Observable implements Observer {
 
     public MediaPlayer mediaPlayer;
-    public StringProperty characterPositionRow = new SimpleStringProperty("1"); //For Binding
-    public StringProperty characterPositionColumn = new SimpleStringProperty("1"); //For Binding
     private IModel model;
     private int characterPositionRowIndex;
     private int characterPositionColumnIndex;
 
-    private Scene scene;
+    public IntegerProperty maze_rows_size;
+    public IntegerProperty maze_columns_size;
 
     public ViewModel(IModel model) {
         this.model = model;
+        maze_rows_size = new SimpleIntegerProperty();
+        maze_columns_size = new SimpleIntegerProperty();
     }
 
     @Override
@@ -42,12 +47,8 @@ public class ViewModel extends Observable implements Observer {
         if (o == model) {
             //arg is Maze
             characterPositionRowIndex = model.getCharacterPositionRow();
-            characterPositionRow.set(characterPositionRowIndex + "");
             characterPositionColumnIndex = model.getCharacterPositionColumn();
-            characterPositionColumn.set(characterPositionColumnIndex + "");
             if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
-
-
                 try {
                     replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
                 } catch (URISyntaxException e) {
@@ -61,16 +62,25 @@ public class ViewModel extends Observable implements Observer {
     }
 
     public void replace_music(Media media) {
-//        mediaPlayer.dispose();
+        if (mediaPlayer!=null)
+            mediaPlayer.dispose();
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
     }
 
 
-    public int[][] generateMaze(int width, int height) {
+    public void generateMaze(int width, int height) {
         model.generateMaze(width, height);
-        return model.getMaze();
+//        try {
+//            Thread.sleep(20000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return model.getMaze();
     }
+
+    public Position getGoalPosition(){return model.getGoalPosition();}
+
 
     public void moveCharacter(KeyCode movement) {
         model.moveCharacter(movement);
@@ -98,7 +108,7 @@ public class ViewModel extends Observable implements Observer {
         alert.show();
     }
 
-    private void raise_NEW(){
+    private void raise_NEW() {
 
     }
 
@@ -109,11 +119,27 @@ public class ViewModel extends Observable implements Observer {
     public Maze loadMaze(String name) {
         return model.loadMaze(name);
     }
-    public Parent setScene(String sceneName)
-    {
+
+    public void switchScene(Stage primaryStage, String sceneName) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource( sceneName + "View.fxml").openStream());
+            Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(getClass().getResource("../View/" +sceneName + "Style.css").toExternalForm());
+            primaryStage.setScene(scene);
+            AView view = fxmlLoader.getController();
+            view.setViewModel(this);
+            this.addObserver(view);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Parent setScene(String sceneName) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource(sceneName + "View.fxml").openStream());
             return root;
         } catch (IOException e) {
             e.printStackTrace();

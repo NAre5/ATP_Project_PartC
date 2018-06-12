@@ -34,7 +34,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void createNewMaze(ActionEvent actionEvent) {
-        switchScene((Stage)NEW.getScene().getWindow(),"New");
+        viewModel.switchScene((Stage)NEW.getScene().getWindow(),"New");
 //        showAlert("NEW");
     }
 

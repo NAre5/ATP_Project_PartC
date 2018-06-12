@@ -53,6 +53,11 @@ public class Model extends Observable implements IModel {
     private int characterPositionRow = 1;
     private int characterPositionColumn = 1;
 
+    @Override
+    public Position getGoalPosition() {
+        return maze.getGoalPosition();
+    }
+
 
     //if problem probably here because maze
     @Override
@@ -76,6 +81,8 @@ public class Model extends Observable implements IModel {
                             byte[] decompressedMaze = new byte[100000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                             is.read(decompressedMaze); //Fill decompressedMaze with bytes
                             maze = new Maze(decompressedMaze);
+                            characterPositionColumn=maze.getStartPosition().getColumnIndex();
+                            characterPositionRow = maze.getStartPosition().getRowIndex();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -227,10 +234,6 @@ public class Model extends Observable implements IModel {
         return null;
     }
 
-    @Override
-    public Position getGoalPosition() {
-        return maze.getGoalPosition();
-    }
 
     public void saveMaze(String name) {
         File theDir = new File("Mazes");

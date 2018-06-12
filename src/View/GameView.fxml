@@ -7,7 +7,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#KeyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="GameStyle.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#KeyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="GameStyle.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GameView">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -42,7 +42,13 @@
         </MenuBar>
     </top>
     <center>
-        <MazeDisplayer fx:id="mazeDisplayer" />
+        <MazeDisplayer fx:id="mazeDisplayer" height="600.0" width="600.0"
+                       imageFileNameCharacter="resourcesd/Images/character4.jpg"
+                       imageFileNameWall="resourcesd/Images/wall4.jpg"
+                       imageFileNameWalk="resourcesd/Images/walk.jpg"
+                       imageFileNameEnd="resourcesd/Images/pokemon/Moltres.jpg"
+                       imageFileNameSolution="resourcesd/Images/pokemon/pikachu.jpg"
+        />
     </center>
     <left>
         <Button fx:id="Solve" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solveMaze" text="Button" BorderPane.alignment="CENTER" />
