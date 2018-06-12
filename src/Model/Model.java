@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import Server.*;
+
 /**
  * Created by Aviadjo on 6/14/2017.
  */
@@ -93,32 +94,95 @@ public class Model extends Observable implements IModel {
         return maze.getMaze();
     }
 
+    private KeyCode last = KeyCode.DOWN;
+
     @Override
     public void moveCharacter(KeyCode movement) {
         try {
             switch (movement) {
                 case UP:
-                    if (maze.getMaze()[characterPositionRow - 1][characterPositionColumn] == 0)
+                    if (canGoTo(-1, 0))
+                        characterPositionRow--;
+                    break;
+                case NUMPAD8:
+                    if (canGoTo(-1, 0))
                         characterPositionRow--;
                     break;
                 case DOWN:
-                    if (maze.getMaze()[characterPositionRow + 1][characterPositionColumn] == 0)
+                    if (canGoTo(1, 0))
+                        characterPositionRow++;
+                    break;
+                case NUMPAD2:
+                    if (canGoTo(1, 0))
                         characterPositionRow++;
                     break;
                 case RIGHT:
-                    if (maze.getMaze()[characterPositionRow][characterPositionColumn + 1] == 0)
+                    if (canGoTo(0, 1))
+                        characterPositionColumn++;
+                    break;
+                case NUMPAD6:
+                    if (canGoTo(0, 1))
                         characterPositionColumn++;
                     break;
                 case LEFT:
-                    if (maze.getMaze()[characterPositionRow][characterPositionColumn - 1] == 0)
+                    if (canGoTo(0, -1))
                         characterPositionColumn--;
                     break;
+                case NUMPAD4:
+                    if (canGoTo(0, -1))
+                        characterPositionColumn--;
+                    break;
+                case NUMPAD1:
+                    if (canGoTo(1, -1)) {
+                        if (canGoTo(0, -1) || canGoTo(1, 0)) {
+                            characterPositionRow++;
+                            characterPositionColumn--;
+                        }
+                    }
+                    break;
+                case NUMPAD3:
+                    if (canGoTo(1, 1)) {
+                        if (canGoTo(1, 0) || canGoTo(0, 1)) {
+                            characterPositionRow++;
+                            characterPositionColumn++;
+                        }
+                    }
+                    break;
+                case NUMPAD9:
+                    if (canGoTo(-1, 1)) {
+                        if (canGoTo(-1, 0) || canGoTo(0, 1)) {
+                            characterPositionRow--;
+                            characterPositionColumn++;
+                        }
+                    }
+                    break;
+                case NUMPAD7:
+                    if (canGoTo(-1,-1)) {
+                        if (canGoTo(-1,0)||canGoTo(0,-1)) {
+                            characterPositionRow--;
+                            characterPositionColumn--;
+                        }
+                    }
+                    break;
+                case END:
+                    while (true) {
+                        int cpr = characterPositionRow, cpc = characterPositionColumn;
+                        moveCharacter(last);
+                        if (cpr == characterPositionRow && cpc == characterPositionColumn)
+                            break;
+                    }
+
             }
+            if (movement != KeyCode.END && ((movement.isKeypadKey() && movement.isDigitKey()) || (movement.isArrowKey())))
+                last = movement;
             setChanged();
             notifyObservers();
         } catch (ArrayIndexOutOfBoundsException e) {
         }
+    }
 
+    private boolean canGoTo(int d_i, int d_j) {
+        return maze.getMaze()[characterPositionRow + d_i][characterPositionColumn + d_j] == 0;
     }
 
     @Override
@@ -144,7 +208,7 @@ public class Model extends Observable implements IModel {
                             toServer.flush();
                             toServer.writeObject(maze);
                             toServer.flush();
-                            Solution mazeSolution = (Solution)fromServer.readObject();
+                            Solution mazeSolution = (Solution) fromServer.readObject();
                         } catch (Exception var10) {
                             var10.printStackTrace();
                         }

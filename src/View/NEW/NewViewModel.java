@@ -32,7 +32,6 @@ public class NewViewModel extends AView {
             return;
         }
         MainView m = new MainView();
-        m.displayMaze(viewModel.generateMaze(row,column));
+//        m.displayMaze(viewModel.generateMaze(row,column));
     }
-    public onKey
 }
