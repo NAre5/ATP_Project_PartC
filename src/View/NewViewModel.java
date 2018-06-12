@@ -32,6 +32,7 @@ public class NewViewModel extends AView {
             return;
         }
         switchScene((Stage)next.getScene().getWindow(),"Game");
+
     }
 
 
