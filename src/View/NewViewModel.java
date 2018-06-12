@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.Observable;
 
@@ -30,8 +31,7 @@ public class NewViewModel extends AView {
             showAlert("Enter only number");
             return;
         }
-        MainView m = new MainView();
-        m.displayMaze(viewModel.generateMaze(row, column));
+        switchScene((Stage)next.getScene().getWindow(),"Game");
     }
 
 
