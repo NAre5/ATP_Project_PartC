@@ -7,8 +7,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -25,29 +27,22 @@ public class Main extends Application {
         model.addObserver(viewModel);
         //--------------
         primaryStage.setTitle("My Application!");
+
         FXMLLoader fxmlLoader = new FXMLLoader();
-//        Parent root = fxmlLoader.load(getClass().getResource("View.fxml").openStream());
-//        Parent root = fxmlLoader.load(getClass().getResource("Intro/Intro.fxml").openStream());
-        Parent root = fxmlLoader.load(getClass().getResource("Intro/Intro.fxml").openStream());
-        Scene scene = new Scene(root, 800, 700);
-//        scene.getStylesheets().add(getClass().getResource("Intro/IntroStyle.css").toExternalForm());
+        Parent root = fxmlLoader.load(getClass().getResource("GameView.fxml").openStream());
+        Scene scene = new Scene(root,800,700);
+        scene.getStylesheets().add(getClass().getResource("GameStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         AView view = fxmlLoader.getController();
 //        view.setResizeEvent(scene);
+//        view.switchScene( primaryStage,"Start");
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
-                //--------------
-//        View view = fxmlLoader.getController();
-//        view.setResizeEvent(scene);
-//        view.setViewModel(viewModel);
-//        viewModel.addObserver(view);
-        //--------------
+
         SetStageCloseEvent(primaryStage);
         primaryStage.show();
-//        Thread.sleep(3000);
-//        scene.setRoot(FXMLLoader.load(getClass().getResource("NEW/NewView.fxml")));
-        primaryStage.show();
     }
+
 
     private void SetStageCloseEvent(Stage primaryStage) {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

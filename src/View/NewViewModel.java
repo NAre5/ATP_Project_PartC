@@ -1,15 +1,13 @@
-package View.NEW;
+package View;
 
 import View.AView;
-import View.MainPage.MainView;
+import View.MainView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 
-import java.lang.reflect.InvocationHandler;
 import java.util.Observable;
 
 
@@ -17,6 +15,7 @@ public class NewViewModel extends AView {
     public Button next;
     public TextField text_rowNum;
     public TextField text_columnNum;
+    public GridPane gridPane;
 
     public void StartGame(ActionEvent actionEvent) {
         int row;

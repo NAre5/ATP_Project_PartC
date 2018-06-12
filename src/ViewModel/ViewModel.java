@@ -1,16 +1,20 @@
 package ViewModel;
 
 import Model.IModel;
+import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Observable;
 import java.util.Observer;
@@ -96,5 +100,24 @@ public class ViewModel extends Observable implements Observer {
 
     private void raise_NEW(){
 
+    }
+
+    public void saveMaze(String name) {
+        model.saveMaze(name);
+    }
+
+    public Maze loadMaze(String name) {
+        return model.loadMaze(name);
+    }
+    public Parent setScene(String sceneName)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource( sceneName + "View.fxml").openStream());
+            return root;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

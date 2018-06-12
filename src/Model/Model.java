@@ -8,6 +8,8 @@ import algorithms.mazeGenerators.Maze;
 import Client.IClientStrategy;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
+import algorithms.search.ISearchingAlgorithm;
+import algorithms.search.SearchableMaze;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 
@@ -157,8 +159,8 @@ public class Model extends Observable implements IModel {
                     }
                     break;
                 case NUMPAD7:
-                    if (canGoTo(-1,-1)) {
-                        if (canGoTo(-1,0)||canGoTo(0,-1)) {
+                    if (canGoTo(-1, -1)) {
+                        if (canGoTo(-1, 0) || canGoTo(0, -1)) {
                             characterPositionRow--;
                             characterPositionColumn--;
                         }
@@ -229,4 +231,62 @@ public class Model extends Observable implements IModel {
     public Position getGoalPosition() {
         return maze.getGoalPosition();
     }
+
+    public void saveMaze(String name) {
+        File theDir = new File("Mazes");
+        theDir.mkdir();
+        ObjectOutputStream outputStream = null;
+
+        try {
+            File maze_file = new File("Mazes/" + name);
+            if (maze_file.exists()) {
+                throw new IllegalArgumentException();
+            } else {
+                outputStream = new ObjectOutputStream(new FileOutputStream(maze_file));
+                outputStream.writeObject(maze);
+            }
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (Exception var33) {
+            ;
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException var29) {
+                var29.printStackTrace();
+            }
+
+        }
+    }
+
+    @Override
+    public Maze loadMaze(String name) {
+        ObjectInputStream ois = null;
+        Maze loadMaze = null;
+        try {
+            File solution_file = new File("Solutions/" + maze.hashCode());//The path of the new file is the hash code for this maze
+            if (solution_file.exists()) {//if the file exists, it is means we solve thus maze in the past and we just need to read the file.
+                ois = new ObjectInputStream(new FileInputStream(solution_file.getPath()));
+                loadMaze = (Maze) ois.readObject();
+            } else {//if we did not solve this maze in past.
+                throw new IllegalArgumentException();
+            }
+        }catch (IllegalArgumentException e ) {
+            throw e;
+        }
+        catch (Exception ignored) {
+        } finally { /*Safe close of the streams */
+            try {
+                if (ois != null)
+                    ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return loadMaze;
+    }
+
 }
