@@ -11,7 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainView extends AView implements Initializable,Observer {
+public class MainView extends AView implements Initializable {
 
     public MazeDisplayer mazeDisplayer;
 
@@ -45,5 +45,10 @@ public class MainView extends AView implements Initializable,Observer {
     public void KeyPressed(KeyEvent keyEvent) {
         viewModel.moveCharacter(keyEvent.getCode());
         keyEvent.consume();
+    }
+
+    @Override
+    protected void init() {
+
     }
 }

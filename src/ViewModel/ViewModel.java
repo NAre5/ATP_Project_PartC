@@ -29,20 +29,19 @@ public class ViewModel extends Observable implements Observer {
 
     private Scene scene;
 
-    public ViewModel(IModel model){
+    public ViewModel(IModel model) {
         this.model = model;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o==model){
+        if (o == model) {
             //arg is Maze
             characterPositionRowIndex = model.getCharacterPositionRow();
             characterPositionRow.set(characterPositionRowIndex + "");
             characterPositionColumnIndex = model.getCharacterPositionColumn();
             characterPositionColumn.set(characterPositionColumnIndex + "");
-            if (model.getGoalPosition().equals(new Position(characterPositionRowIndex,characterPositionColumnIndex)))
-            {
+            if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
 
 
                 try {
@@ -57,20 +56,19 @@ public class ViewModel extends Observable implements Observer {
         }
     }
 
-    public void replace_music(Media media)
-    {
+    public void replace_music(Media media) {
 //        mediaPlayer.dispose();
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
     }
 
 
-
-    public void generateMaze(int width, int height){
+    public int[][] generateMaze(int width, int height) {
         model.generateMaze(width, height);
+        return model.getMaze();
     }
 
-    public void moveCharacter(KeyCode movement){
+    public void moveCharacter(KeyCode movement) {
         model.moveCharacter(movement);
     }
 

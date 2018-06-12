@@ -30,8 +30,8 @@
          <children>
             <Label text="Maze row:" />
             <Label text="Maze column:" GridPane.rowIndex="2" />
-            <TextField fx:id="text_rowNum" promptText="Insert row size" GridPane.columnIndex="1" />
-            <TextField fx:id="text_columnNum" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="text_rowNum" onKeyPressed="#ValidNumber" promptText="Insert row size" GridPane.columnIndex="1" />
+            <TextField fx:id="text_columnNum" onKeyPressed="#ValidNumber" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Button fx:id="next" ellipsisString="" layoutX="264.0" layoutY="375.0" mnemonicParsing="false" onAction="#StartGame" prefHeight="25.0" prefWidth="74.0" text="next" />
