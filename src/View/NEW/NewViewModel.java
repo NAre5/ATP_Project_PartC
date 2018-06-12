@@ -2,7 +2,6 @@ package View.NEW;
 
 import View.AView;
 import View.MainPage.MainView;
-import algorithms.mazeGenerators.Maze;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

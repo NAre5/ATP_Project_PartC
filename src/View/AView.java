@@ -2,7 +2,6 @@ package View;
 
 import ViewModel.ViewModel;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert;
 
 import java.util.Observer;
 
@@ -22,9 +21,5 @@ public abstract class AView implements IView,Observer {
         alert.setContentText(alertMessage);
         alert.show();
     }
-    public void showAlert(String alertMessage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(alertMessage);
-        alert.show();
-    }
+
 }

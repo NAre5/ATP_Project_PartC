@@ -14,7 +14,6 @@ import javafx.stage.WindowEvent;
 
 import java.util.Observer;
 import java.util.Optional;
-import IO.MyDecompressorInputStream;
 
 public class Main extends Application {
     public Scene scene;
@@ -30,7 +29,6 @@ public class Main extends Application {
 //        Parent root = fxmlLoader.load(getClass().getResource("View.fxml").openStream());
 //        Parent root = fxmlLoader.load(getClass().getResource("Intro/Intro.fxml").openStream());
         Parent root = fxmlLoader.load(getClass().getResource("Intro/Intro.fxml").openStream());
-        Parent root = fxmlLoader.load(getClass().getResource("NEW/NewView.fxml").openStream());
         Scene scene = new Scene(root, 800, 700);
 //        scene.getStylesheets().add(getClass().getResource("Intro/IntroStyle.css").toExternalForm());
         primaryStage.setScene(scene);
