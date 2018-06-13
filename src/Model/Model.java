@@ -185,6 +185,7 @@ public class Model extends Observable implements IModel {
                     }
 
             }
+
             if (movement != KeyCode.END && ((movement.isKeypadKey() && movement.isDigitKey()) || (movement.isArrowKey())))
                 last = movement;
             setChanged();
