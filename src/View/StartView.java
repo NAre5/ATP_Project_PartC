@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
@@ -35,64 +37,86 @@ public class StartView extends AView implements Initializable {
 
     /**
      * switch to new scene from type "New"
+     *
      * @param actionEvent
      */
     public void createNewMaze(ActionEvent actionEvent) {
-        viewModel.switchScene((Stage)NEW.getScene().getWindow(),"New");
+        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
     }
 
     /**
      * switch to new scene from type "Load"
+     *
      * @param actionEvent
      */
-    public void loadMaze(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setTitle("Load maze");
-            Pane pane = new Pane();
-            VBox vb = new VBox();
-            Label lbl = new Label("Enter maze name:");
-            Button btn = new Button("Load");
-            TextField txt = new TextField();
-            vb.getChildren().addAll(lbl, txt, btn);
-            pane.getChildren().addAll(vb);
-            Scene scene = new Scene(pane, 300, 150);
-            stage.setScene(scene);
-//            primaryStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
-            btn.setOnAction(ev->{
-                String name = txt.getText();
-                if (name == null || name.trim().length()==0)
-                {
-                    showAlert("Name file must contain at least one character");
-                    ev.consume();
-                }
-                if(name.matches(".*[/:*?<>|\"].*")||name.contains("\\"))
-                {
-                    showAlert("File name can not contain /:*?<>|\"\\");
-                    ev.consume();
-                }
-                try
-                {
-                    viewModel.switchScene((Stage)NEW.getScene().getWindow(),"Game");
-                    viewModel.loadMaze(name);
-                    stage.close();
+//    public void loadMaze(ActionEvent actionEvent) {
+//        try {
+//            Stage stage = new Stage();
+//            stage.setTitle("Load maze");
+//            Pane pane = new Pane();
+//            VBox vb = new VBox();
+//            Label lbl = new Label("Enter maze name:");
+//            Button btn = new Button("Load");
+//            TextField txt = new TextField();
+//            vb.getChildren().addAll(lbl, txt, btn);
+//            pane.getChildren().addAll(vb);
+//            Scene scene = new Scene(pane, 300, 150);
+//            stage.setScene(scene);
+////            primaryStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+//            stage.show();
+//            btn.setOnAction(ev->{
+//                String name = txt.getText();
+//                if (name == null || name.trim().length()==0)
+//                {
+//                    showAlert("Name file must contain at least one character");
+//                    ev.consume();
+//                }
+//                if(name.matches(".*[/:*?<>|\"].*")||name.contains("\\"))
+//                {
+//                    showAlert("File name can not contain /:*?<>|\"\\");
+//                    ev.consume();
+//                }
+//                try
+//                {
+//                    viewModel.switchScene((Stage)NEW.getScene().getWindow(),"Game");
+//                    viewModel.loadMaze(name);
+//                    stage.close();
+//
+//                }
+//                catch (IllegalArgumentException e)
+//                {
+//                    viewModel.switchScene((Stage)NEW.getScene().getWindow(),"Start");
+//                    showAlert("File name does not exists");
+//                    ev.consume();
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//
+//        }
+//    }
+    public void load(ActionEvent event) {
+        File file = loadFile();
+        if (file == null)
+            return;
+        String path = file.getAbsolutePath();
+        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "Game");
+        viewModel.loadMaze(new File(path));
 
-                }
-                catch (IllegalArgumentException e)
-                {
-                    showAlert("File name does not exists");
-                    ev.consume();
-                }
-            });
+        event.consume();
+    }
 
-        } catch (Exception e) {
 
-        }
+    private File loadFile() {
+        JFileChooser fileChooser = new JFileChooser("Mazes");
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+            return fileChooser.getSelectedFile();
+        return null;
     }
 
     /**
      * switch to new scene from type "Help"
+     *
      * @param actionEvent
      */
     public void openHelp(ActionEvent actionEvent) {
@@ -101,6 +125,7 @@ public class StartView extends AView implements Initializable {
 
     /**
      * switch to new scene from type "About"
+     *
      * @param actionEvent
      */
     public void openAbout(ActionEvent actionEvent) {

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -122,14 +123,18 @@ public class ViewModel extends Observable implements Observer {
 
     }
 
-    public void saveMaze(String name) {
-        model.saveMaze(name);
+//    public void saveMaze(String name) {
+//        model.saveMaze(name);
+//    }
+
+    public void loadMaze(File name) {
+        model.loadMaze(name);
     }
 
-    public Maze loadMaze(String name) {
-        return model.loadMaze(name);
+    public void saveMaze(File file)
+    {
+        model.saveMaze(file);
     }
-
     public void switchScene(Stage primaryStage, String sceneName) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -140,7 +145,6 @@ public class ViewModel extends Observable implements Observer {
             AView view = fxmlLoader.getController();
             view.setViewModel(this);
             this.addObserver(view);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 import javafx.util.Pair;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -20,8 +21,9 @@ public interface IModel {
     int getCharacterPositionColumn();
     void generateSolution();
     Position getGoalPosition();
-    void saveMaze(String name);
-    Maze loadMaze(String name);
+//    void saveMaze(String name);
+    void saveMaze(File file);
+    void loadMaze(File name);
     Position getStartPosition();
     void stopServers();
 //    Solution getSolution();

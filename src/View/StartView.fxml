@@ -24,7 +24,7 @@
                 <Button fx:id="NEW" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                         onAction="#createNewMaze" text="NEW"/>
                 <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                        onAction="#loadMaze" text="LOAD" GridPane.rowIndex="1"/>
+                        onAction="#load" text="LOAD" GridPane.rowIndex="1"/>
                 <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                         onAction="#openHelp" text="HELP" GridPane.rowIndex="2"/>
                 <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
