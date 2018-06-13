@@ -22,4 +22,6 @@ public interface IModel {
     Position getGoalPosition();
     void saveMaze(String name);
     Maze loadMaze(String name);
+    Position getStartPosition();
+//    Solution getSolution();
 }

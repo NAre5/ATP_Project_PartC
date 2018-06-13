@@ -25,6 +25,8 @@ public class NewView extends AView {
         try {
             row = Integer.parseInt(text_rowNum.getText());
             column = Integer.parseInt(text_columnNum.getText());
+            if(row<1||column<1)
+                throw new IllegalArgumentException();
         } catch (NumberFormatException e) {
             showAlert("Enter only number");
             actionEvent.consume();
@@ -34,11 +36,17 @@ public class NewView extends AView {
             actionEvent.consume();
             return;
         }
+        catch (IllegalArgumentException e)
+        {
+            showAlert("Enter only positive number");
+            actionEvent.consume();
+            return;
+        }
 //        maze_columns_size.set(column);
 //        maze_rows_size.set(row);
 //        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
+        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
         viewModel.generateMaze(row,column);
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
     }
 

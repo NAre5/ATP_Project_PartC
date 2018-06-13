@@ -29,6 +29,7 @@ public class Model extends Observable implements IModel {
     private ExecutorService threadPool = Executors.newCachedThreadPool();
     Server mgs;
     Server sss;
+    private Solution solution;
 
     public Model() {
         mgs = new Server(5400, 1000, new ServerStrategyGenerateMaze());
@@ -54,6 +55,10 @@ public class Model extends Observable implements IModel {
     public Position getGoalPosition() {
         return maze.getGoalPosition();
     }
+    public Position getStartPosition() {
+        return maze.getStartPosition();
+    }
+
 
 
     //if problem probably here because maze
@@ -80,6 +85,7 @@ public class Model extends Observable implements IModel {
                             maze = new Maze(decompressedMaze);
                             characterPositionColumn = maze.getStartPosition().getColumnIndex();
                             characterPositionRow = maze.getStartPosition().getRowIndex();
+//                            getMazeSolution();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -99,7 +105,6 @@ public class Model extends Observable implements IModel {
     public int[][] getMaze() {
         return maze.getMaze();
     }
-
 
     private KeyCode last = KeyCode.DOWN;
 
@@ -183,7 +188,7 @@ public class Model extends Observable implements IModel {
             if (movement != KeyCode.END && ((movement.isKeypadKey() && movement.isDigitKey()) || (movement.isArrowKey())))
                 last = movement;
             setChanged();
-            notifyObservers();
+            notifyObservers("maze");
         } catch (ArrayIndexOutOfBoundsException e) {
         }
     }
@@ -239,6 +244,8 @@ public class Model extends Observable implements IModel {
             notifyObservers("solution");
         });
 
+
+//        return null;
     }
 
     @Override
@@ -285,12 +292,16 @@ public class Model extends Observable implements IModel {
                 ois = new ObjectInputStream(new FileInputStream(maze_file.getPath()));
                 loadMaze = (Maze) ois.readObject();
                 maze = loadMaze;
+//                getMazeSolution();
+                characterPositionRow = maze.getStartPosition().getRowIndex();
+                characterPositionColumn = maze.getStartPosition().getColumnIndex();
             } else {//if we did not solve this maze in past.
                 throw new IllegalArgumentException();
             }
-        } catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException e ) {
             throw e;
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored) {
         } finally { /*Safe close of the streams */
             try {
                 if (ois != null)
@@ -300,6 +311,8 @@ public class Model extends Observable implements IModel {
             }
 
         }
+        setChanged();
+        notifyObservers("maze");
         return loadMaze;
     }
 

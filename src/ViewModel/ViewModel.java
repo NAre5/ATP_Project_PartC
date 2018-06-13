@@ -23,9 +23,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Created by Aviadjo on 6/14/2017.
- */
+
 public class ViewModel extends Observable implements Observer {
 
     public MediaPlayer mediaPlayer;
@@ -74,17 +72,10 @@ public class ViewModel extends Observable implements Observer {
 
     public void generateMaze(int width, int height) {
         model.generateMaze(width, height);
-//        try {
-//            Thread.sleep(20000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        return model.getMaze();
     }
 
-    public Position getGoalPosition() {
-        return model.getGoalPosition();
-    }
+    public Position getGoalPosition(){return model.getGoalPosition();}
+    public Position getStartPosition(){return model.getStartPosition();}
 
 
     public void moveCharacter(KeyCode movement) {
@@ -136,7 +127,7 @@ public class ViewModel extends Observable implements Observer {
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
             Scene scene = new Scene(root, 800, 700);
-            scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("../View/" +sceneName + "Style.css").toExternalForm());
             primaryStage.setScene(scene);
             AView view = fxmlLoader.getController();
             view.setViewModel(this);

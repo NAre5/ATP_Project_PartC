@@ -1,20 +1,32 @@
 package View;
 
+import Server.Server;
+import View.AView;
+import View.MazeDisplayer;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.ISearchingAlgorithm;
+import algorithms.search.SearchableMaze;
+import algorithms.search.Solution;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.net.URL;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class GameView extends AView implements Initializable {
@@ -121,7 +133,7 @@ public class GameView extends AView implements Initializable {
             TextField txt = new TextField();
             vb.getChildren().addAll(lbl, txt, btn);
             pane.getChildren().addAll(vb);
-            Scene scene = new Scene(pane, 200, 150);
+            Scene scene = new Scene(pane, 300, 150);
             stage.setScene(scene);
 //            primaryStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
             stage.show();
@@ -139,8 +151,7 @@ public class GameView extends AView implements Initializable {
                 }
                 try
                 {
-                    Maze loadMaze = viewModel.loadMaze(name);
-                    mazeDisplayer.setMaze(loadMaze.getMaze(),viewModel.getGoalPosition());
+                    viewModel.loadMaze(name);
                     stage.close();
                 }
                 catch (IllegalArgumentException e)
@@ -156,8 +167,7 @@ public class GameView extends AView implements Initializable {
     }
 
     public void StartMaze(ActionEvent actionEvent) {
-        viewModel.raiseStage("New");
-//        Stage aboutStage = new Stage();
+        viewModel.switchScene((Stage)mazeDisplayer.getScene().getWindow(),"New");//        Stage aboutStage = new Stage();
 ////        aboutStage.setAlwaysOnTop(true);
 ////        aboutStage.setResizable(false);
 //        aboutStage.setTitle("New");
@@ -180,15 +190,17 @@ public class GameView extends AView implements Initializable {
     public void About(ActionEvent actionEvent) {
         viewModel.raiseStage("About");
 //        Stage aboutStage = new Stage();
+//        Stage aboutStage = new Stage();
 //        aboutStage.setAlwaysOnTop(true);
+//        viewModel.switchScene((Stage)mazeDisplayer.getScene().getWindow(),"New");
 //        aboutStage.setResizable(false);
-//        aboutStage.setTitle("About");
+//        aboutStage.setTitle("New");
 //
 //        Parent root=null;
 //        try
 //        {
 //            //change MyView.fxml to help.fxml after designed
-//            root = FXMLLoader.load(getClass().getResource("AboutView.fxml"));
+//            root = FXMLLoader.load(getClass().getResource("NewView.fxml"));
 //        }
 //        catch(IOException e) {
 //            showAlert("Exception!");
@@ -198,4 +210,40 @@ public class GameView extends AView implements Initializable {
 //        aboutStage.initModality(Modality.APPLICATION_MODAL);
 //        aboutStage.show();
     }
+
+//    public void About(ActionEvent actionEvent) {
+//        Stage aboutStage = new Stage();
+//        aboutStage.setAlwaysOnTop(true);
+//        aboutStage.setResizable(true);
+//        aboutStage.setTitle("About");
+//
+//        Parent root=null;
+//        try
+//        {
+//            //change MyView.fxml to help.fxml after designed
+//            root = FXMLLoader.load(getClass().getResource("About.fxml"));
+//        }
+//        catch(IOException e) {
+//            showAlert("Exception!");
+//        }
+//        Scene scene = new Scene(root,700,400);
+//        aboutStage.setScene(scene);
+//        aboutStage.initModality(Modality.APPLICATION_MODAL);
+//        aboutStage.show();
+////        aboutStage.setTitle("About");
+////
+////        Parent root=null;
+////        try
+////        {
+////            //change MyView.fxml to help.fxml after designed
+////            root = FXMLLoader.load(getClass().getResource("AboutView.fxml"));
+////        }
+////        catch(IOException e) {
+////            showAlert("Exception!");
+////        }
+////        Scene scene = new Scene(root,700,400);
+////        aboutStage.setScene(scene);
+////        aboutStage.initModality(Modality.APPLICATION_MODAL);
+////        aboutStage.show();
+//    }
 }
