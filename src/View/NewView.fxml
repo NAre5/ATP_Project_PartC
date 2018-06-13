@@ -6,18 +6,22 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="639.0" snapToPixel="false" stylesheets="NewStyle.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.NewView">
    <children>
-      <GridPane layoutX="132.0" layoutY="303.0" prefHeight="51.0" prefWidth="354.0">
+      <GridPane fx:id="advanced_choose" disable="true" layoutX="151.0" layoutY="303.0" prefHeight="51.0" prefWidth="335.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -46,6 +50,17 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ImageView>
-      <Button layoutX="14.0" layoutY="137.0" mnemonicParsing="false" text="Button" />
+      <VBox fx:id="simple_choose" layoutX="149.0" layoutY="243.0" prefHeight="51.0" prefWidth="100.0">
+         <children>
+            <RadioButton mnemonicParsing="false" text="easy">
+               <toggleGroup>
+                  <ToggleGroup fx:id="level" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="medium" mnemonicParsing="false" text="medium" toggleGroup="$level" />
+            <RadioButton mnemonicParsing="false" text="hard" toggleGroup="$level" />
+         </children>
+      </VBox>
+      <CheckBox layoutX="14.0" layoutY="303.0" mnemonicParsing="false" onAction="#change_difficulty" text="advanced settings:" />
+      <Label layoutX="14.0" layoutY="243.0" text="Chose Maze level:" />
    </children>
 </Pane>

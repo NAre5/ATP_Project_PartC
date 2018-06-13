@@ -2,11 +2,13 @@ package View;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -18,6 +20,10 @@ public class NewView extends AView {
     public Button next;
     public TextField text_rowNum;
     public TextField text_columnNum;
+    public GridPane advanced_choose;
+    public ToggleGroup level;
+    public RadioButton medium;
+
 
     public void StartGame(ActionEvent actionEvent) {
         int row;
@@ -85,6 +91,33 @@ public class NewView extends AView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        level.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                switch (newValue.toString()){
+                    case "easy":
+                        text_columnNum.setText("10");
+                        text_rowNum.setText("10");
+                        break;
+                    case "medium":
+                        text_columnNum.setText("20");
+                        text_rowNum.setText("20");
+                        break;
+                    case "hard":
+                        text_columnNum.setText("50");
+                        text_rowNum.setText("50");
+                        break;
+                    default:
+                        text_columnNum.setText("10");
+                        text_rowNum.setText("10");
+                        break;
+                }
+            }
+        });
+        medium.setSelected(true);
+    }
+
+    public void change_difficulty(ActionEvent actionEvent) {
 
     }
 }

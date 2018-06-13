@@ -177,6 +177,10 @@ public class Model extends Observable implements IModel {
                         }
                     }
                     break;
+                case HOME:
+                    characterPositionRow = getStartPosition().getRowIndex();
+                    characterPositionColumn= getStartPosition().getColumnIndex();
+                    break;
                 case END:
                     while (true) {
                         int cpr = characterPositionRow, cpc = characterPositionColumn;

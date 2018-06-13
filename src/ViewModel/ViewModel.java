@@ -4,6 +4,7 @@ import Model.IModel;
 import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
@@ -181,15 +182,17 @@ public class ViewModel extends Observable implements Observer {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    model.stopServers();
-                    primaryStage.close();
-                    // ... user chose OK
-                    // Close program
+                    stopModel();
+//                    primaryStage.close();
+                    Platform.exit();
                 } else {
-                    // ... user chose CANCEL or closed the dialog
                     windowEvent.consume();
                 }
             }
         });
+    }
+    public void stopModel()
+    {
+        model.stopServers();
     }
 }

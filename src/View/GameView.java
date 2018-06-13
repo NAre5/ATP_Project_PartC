@@ -1,15 +1,9 @@
 package View;
 
-import Server.Server;
-import View.AView;
-import View.MazeDisplayer;
-import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
-import algorithms.search.ISearchingAlgorithm;
-import algorithms.search.SearchableMaze;
-import algorithms.search.Solution;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -317,7 +311,14 @@ public class GameView extends AView implements Initializable {
 
     }
 
+
+
+    public void Close(ActionEvent actionEvent)
+    {
+        viewModel.stopModel();
+        Stage stage = (Stage)mazeDisplayer.getScene().getWindow();
+        stage.close();
+        Platform.exit();
+        actionEvent.consume();
+    }
 }
-
-
-
