@@ -33,32 +33,14 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("StartStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         AView view = fxmlLoader.getController();
-//        view.setResizeEvent(scene);
-//        view.switchScene( primaryStage,"Start");
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
-
-        SetStageCloseEvent(primaryStage);
+        viewModel.SetStageCloseEvent(primaryStage);
         primaryStage.show();
     }
 
 
-    private void SetStageCloseEvent(Stage primaryStage) {
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent windowEvent) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    model.stopServers();
-                    // ... user chose OK
-                    // Close program
-                } else {
-                    // ... user chose CANCEL or closed the dialog
-                    windowEvent.consume();
-                }
-            }
-        });
-    }
+
 
     public static void main(String[] args) {
         launch(args);

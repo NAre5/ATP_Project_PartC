@@ -23,5 +23,6 @@ public interface IModel {
     void saveMaze(String name);
     Maze loadMaze(String name);
     Position getStartPosition();
+    void stopServers();
 //    Solution getSolution();
 }

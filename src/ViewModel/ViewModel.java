@@ -6,15 +6,18 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -22,6 +25,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 
 public class ViewModel extends Observable implements Observer {
@@ -74,8 +78,13 @@ public class ViewModel extends Observable implements Observer {
         model.generateMaze(width, height);
     }
 
-    public Position getGoalPosition(){return model.getGoalPosition();}
-    public Position getStartPosition(){return model.getStartPosition();}
+    public Position getGoalPosition() {
+        return model.getGoalPosition();
+    }
+
+    public Position getStartPosition() {
+        return model.getStartPosition();
+    }
 
 
     public void moveCharacter(KeyCode movement) {
@@ -103,7 +112,6 @@ public class ViewModel extends Observable implements Observer {
     }
 
 
-
     private void showAlert(String alertMessage) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(alertMessage);
@@ -127,34 +135,11 @@ public class ViewModel extends Observable implements Observer {
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
             Scene scene = new Scene(root, 800, 700);
-            scene.getStylesheets().add(getClass().getResource("../View/" +sceneName + "Style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
             primaryStage.setScene(scene);
             AView view = fxmlLoader.getController();
             view.setViewModel(this);
             this.addObserver(view);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void raise(String sceneName) {
-        try {
-            Stage aboutStage = new Stage();
-            aboutStage.setAlwaysOnTop(true);
-            aboutStage.setResizable(false);
-            aboutStage.setTitle(sceneName);
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
-            Scene scene = new Scene(root, 800, 700);
-            try {
-                scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
-            }catch (Exception ignore){}
-            aboutStage.setScene(scene);
-            AView view = fxmlLoader.getController();
-            view.setViewModel(this);
-            this.addObserver(view);
-            aboutStage.initModality(Modality.APPLICATION_MODAL);
-            aboutStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,7 +162,7 @@ public class ViewModel extends Observable implements Observer {
         } catch (IOException e) {
             showAlert("Exception!");
         }
-        Scene scene = new Scene(root, 700, 400);
+        Scene scene = new Scene(root, 600, 650);
         aboutStage.setScene(scene);
         AView view = fxmlLoader.getController();
         view.setViewModel(this);
@@ -185,14 +170,22 @@ public class ViewModel extends Observable implements Observer {
         aboutStage.initModality(Modality.APPLICATION_MODAL);
         aboutStage.show();
     }
-//    public Parent setScene(String sceneName) {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader();
-//            Parent root = fxmlLoader.load(getClass().getResource(sceneName + "View.fxml").openStream());
-//            return root;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+
+    public void SetStageCloseEvent(Stage primaryStage) {
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent windowEvent) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    model.stopServers();
+                    primaryStage.close();
+                    // ... user chose OK
+                    // Close program
+                } else {
+                    // ... user chose CANCEL or closed the dialog
+                    windowEvent.consume();
+                }
+            }
+        });
+    }
 }

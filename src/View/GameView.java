@@ -167,83 +167,18 @@ public class GameView extends AView implements Initializable {
     }
 
     public void StartMaze(ActionEvent actionEvent) {
-        viewModel.switchScene((Stage)mazeDisplayer.getScene().getWindow(),"New");//        Stage aboutStage = new Stage();
-////        aboutStage.setAlwaysOnTop(true);
-////        aboutStage.setResizable(false);
-//        aboutStage.setTitle("New");
-//
-//        Parent root=null;
-//        try
-//        {
-//            //change MyView.fxml to help.fxml after designed
-//            root = FXMLLoader.load(getClass().getResource("NewView.fxml"));
-//        }
-//        catch(IOException e) {
-//            showAlert("Exception!");
-//        }
-//        Scene scene = new Scene(root,700,400);
-//        aboutStage.setScene(scene);
-//        aboutStage.initModality(Modality.APPLICATION_MODAL);
-//        aboutStage.show();
+        viewModel.switchScene((Stage)mazeDisplayer.getScene().getWindow(),"New");
     }
 
     public void About(ActionEvent actionEvent) {
         viewModel.raiseStage("About");
-//        Stage aboutStage = new Stage();
-//        Stage aboutStage = new Stage();
-//        aboutStage.setAlwaysOnTop(true);
-//        viewModel.switchScene((Stage)mazeDisplayer.getScene().getWindow(),"New");
-//        aboutStage.setResizable(false);
-//        aboutStage.setTitle("New");
-//
-//        Parent root=null;
-//        try
-//        {
-//            //change MyView.fxml to help.fxml after designed
-//            root = FXMLLoader.load(getClass().getResource("NewView.fxml"));
-//        }
-//        catch(IOException e) {
-//            showAlert("Exception!");
-//        }
-//        Scene scene = new Scene(root,700,400);
-//        aboutStage.setScene(scene);
-//        aboutStage.initModality(Modality.APPLICATION_MODAL);
-//        aboutStage.show();
     }
 
-//    public void About(ActionEvent actionEvent) {
-//        Stage aboutStage = new Stage();
-//        aboutStage.setAlwaysOnTop(true);
-//        aboutStage.setResizable(true);
-//        aboutStage.setTitle("About");
-//
-//        Parent root=null;
-//        try
-//        {
-//            //change MyView.fxml to help.fxml after designed
-//            root = FXMLLoader.load(getClass().getResource("About.fxml"));
-//        }
-//        catch(IOException e) {
-//            showAlert("Exception!");
-//        }
-//        Scene scene = new Scene(root,700,400);
-//        aboutStage.setScene(scene);
-//        aboutStage.initModality(Modality.APPLICATION_MODAL);
-//        aboutStage.show();
-////        aboutStage.setTitle("About");
-////
-////        Parent root=null;
-////        try
-////        {
-////            //change MyView.fxml to help.fxml after designed
-////            root = FXMLLoader.load(getClass().getResource("AboutView.fxml"));
-////        }
-////        catch(IOException e) {
-////            showAlert("Exception!");
-////        }
-////        Scene scene = new Scene(root,700,400);
-////        aboutStage.setScene(scene);
-////        aboutStage.initModality(Modality.APPLICATION_MODAL);
-////        aboutStage.show();
-//    }
+    public void openHelp(ActionEvent actionEvent) {
+        viewModel.raiseStage("Help");
+    }
+
+    public void openProperties(ActionEvent actionEvent) {
+        viewModel.raiseStage("Properties");
+    }
 }

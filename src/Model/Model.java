@@ -225,6 +225,7 @@ public class Model extends Observable implements IModel {
                             toServer.writeObject(maze);
                             toServer.flush();
                             Solution mazeSolution = (Solution) fromServer.readObject();
+                            solutionPath.clear();
                             for (AState state : mazeSolution.getSolutionPath()) {
                                 Position p = ((MazeState) state).getCurrent_position();
                                 solutionPath.add(new Pair<>(p.getRowIndex(), p.getColumnIndex()));

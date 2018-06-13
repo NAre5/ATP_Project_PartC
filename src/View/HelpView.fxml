@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HelpView">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" text="Move:" />
+      <Label layoutX="14.0" layoutY="39.0" text="UP - NUMPAD8 OR UP arrow" />
+      <Label layoutX="14.0" layoutY="65.0" text="DOWN - NUMPAD2  DOWN arrow" />
+      <Label layoutX="14.0" layoutY="93.0" text="RIGHT - NUMPAD6  RIGHT arrow" />
+      <Label layoutX="14.0" layoutY="118.0" text="LEFT - NUMAD 4  LEFT arrow" />
+      <Label layoutX="14.0" layoutY="144.0" text="CROSS UP-RIGHT - NUMPAD 9" />
+      <Label layoutX="14.0" layoutY="171.0" text="CROSS UP-LEFT - NUMPAD 7" />
+      <Label layoutX="14.0" layoutY="200.0" text="CROSS DOWN-RIGHT - NUMPAD 3" />
+      <Label layoutX="14.0" layoutY="229.0" text="CROSS DOWN-LEFT - NUMPAD 1" />
+      <Label layoutX="14.0" layoutY="259.0" text="END - Do last move until the first wall" />
+   </children>
+</AnchorPane>

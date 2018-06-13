@@ -96,7 +96,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openHelp(ActionEvent actionEvent) {
-        showAlert("HELP");
+        viewModel.raiseStage("Help");
     }
 
     /**
@@ -104,26 +104,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openAbout(ActionEvent actionEvent) {
-        viewModel.raise("About");
-//        viewModel.raiseStage("About");
-//        Stage aboutStage = new Stage();
-////        aboutStage.setAlwaysOnTop(true);
-////        aboutStage.setResizable(false);
-//        aboutStage.setTitle("About");
-//
-//        Parent root=null;
-//        try
-//        {
-//            //change MyView.fxml to help.fxml after designed
-//            root = FXMLLoader.load(getClass().getResource("AboutView.fxml"));
-//        }
-//        catch(IOException e) {
-//            showAlert("Exception!");
-//        }
-//        Scene scene = new Scene(root,700,400);
-//        aboutStage.setScene(scene);
-//        aboutStage.initModality(Modality.APPLICATION_MODAL);
-//        aboutStage.show();
+        viewModel.raiseStage("About");
     }
 
     @Override

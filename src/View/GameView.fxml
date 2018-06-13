@@ -20,12 +20,12 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Options">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Properties" />
+                        <MenuItem mnemonicParsing="false" onAction="#openProperties" text="Properties" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#openHelp" text="Help" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Exit">
@@ -35,20 +35,14 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#About" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" onAction="#About" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
     <center>
-        <MazeDisplayer fx:id="mazeDisplayer" height="600.0" width="600.0"
-                       imageFileNameCharacter="resourcesd/Images/character4.jpg"
-                       imageFileNameWall="resourcesd/Images/wall4.jpg"
-                       imageFileNameWalk="resourcesd/Images/walk.jpg"
-                       imageFileNameEnd="resourcesd/Images/pokemon/Moltres.jpg"
-                       imageFileNameSolution="resourcesd/Images/pokemon/pikachu.jpg"
-        />
+        <MazeDisplayer fx:id="mazeDisplayer" height="600.0" imageFileNameCharacter="resourcesd/Images/character4.jpg" imageFileNameEnd="resourcesd/Images/pokemon/Moltres.jpg" imageFileNameSolution="resourcesd/Images/pokemon/pikachu.jpg" imageFileNameWalk="resourcesd/Images/walk.jpg" imageFileNameWall="resourcesd/Images/wall4.jpg" width="600.0" />
     </center>
     <left>
         <Button fx:id="Solve" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solveMaze" text="Button" BorderPane.alignment="CENTER" />
