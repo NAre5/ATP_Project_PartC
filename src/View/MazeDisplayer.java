@@ -1,5 +1,6 @@
 package View;
 
+import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.MazeState;

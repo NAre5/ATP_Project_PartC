@@ -102,6 +102,7 @@ public class GameView extends AView implements Initializable {
                 try
                 {
                     viewModel.saveMaze(name);
+                    stage.close();
                 }
                 catch (IllegalArgumentException e)
                 {
@@ -148,6 +149,7 @@ public class GameView extends AView implements Initializable {
                 {
                     Maze loadMaze = viewModel.loadMaze(name);
                     mazeDisplayer.setMaze(loadMaze.getMaze(),viewModel.getGoalPosition());
+                    stage.close();
                 }
                 catch (IllegalArgumentException e)
                 {

@@ -24,9 +24,7 @@ import java.util.concurrent.Executors;
 
 import Server.*;
 
-/**
- * Created by Aviadjo on 6/14/2017.
- */
+
 public class Model extends Observable implements IModel {
 
     private ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -269,10 +267,11 @@ public class Model extends Observable implements IModel {
         ObjectInputStream ois = null;
         Maze loadMaze = null;
         try {
-            File solution_file = new File("Solutions/" + maze.hashCode());//The path of the new file is the hash code for this maze
-            if (solution_file.exists()) {//if the file exists, it is means we solve thus maze in the past and we just need to read the file.
-                ois = new ObjectInputStream(new FileInputStream(solution_file.getPath()));
+            File maze_file = new File("Mazes/" + name);//The path of the new file is the hash code for this maze
+            if (maze_file.exists()) {//if the file exists, it is means we solve thus maze in the past and we just need to read the file.
+                ois = new ObjectInputStream(new FileInputStream(maze_file.getPath()));
                 loadMaze = (Maze) ois.readObject();
+                maze=loadMaze;
             } else {//if we did not solve this maze in past.
                 throw new IllegalArgumentException();
             }

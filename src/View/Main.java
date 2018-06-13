@@ -19,9 +19,10 @@ import java.util.Optional;
 
 public class Main extends Application {
     public Scene scene;
+    private Model model;
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Model model = new Model();
+        model = new Model();
         model.startServers();
         ViewModel viewModel = new ViewModel(model);
         model.addObserver(viewModel);
@@ -50,6 +51,7 @@ public class Main extends Application {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
+                    model.stopServers();
                     // ... user chose OK
                     // Close program
                 } else {
