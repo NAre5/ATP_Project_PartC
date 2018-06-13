@@ -7,22 +7,21 @@ import Server.ServerStrategySolveSearchProblem;
 import algorithms.mazeGenerators.Maze;
 import Client.IClientStrategy;
 import algorithms.mazeGenerators.Position;
-import algorithms.search.AState;
-import algorithms.search.ISearchingAlgorithm;
-import algorithms.search.SearchableMaze;
-import algorithms.search.Solution;
+import algorithms.search.*;
 import javafx.scene.input.KeyCode;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import Server.*;
+import javafx.util.Pair;
 
 
 public class Model extends Observable implements IModel {
@@ -79,7 +78,7 @@ public class Model extends Observable implements IModel {
                             byte[] decompressedMaze = new byte[100000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                             is.read(decompressedMaze); //Fill decompressedMaze with bytes
                             maze = new Maze(decompressedMaze);
-                            characterPositionColumn=maze.getStartPosition().getColumnIndex();
+                            characterPositionColumn = maze.getStartPosition().getColumnIndex();
                             characterPositionRow = maze.getStartPosition().getRowIndex();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -91,7 +90,7 @@ public class Model extends Observable implements IModel {
                 e.printStackTrace();
             }
             setChanged();
-            notifyObservers();
+            notifyObservers("maze");
         });
     }
 
@@ -100,6 +99,7 @@ public class Model extends Observable implements IModel {
     public int[][] getMaze() {
         return maze.getMaze();
     }
+
 
     private KeyCode last = KeyCode.DOWN;
 
@@ -202,10 +202,13 @@ public class Model extends Observable implements IModel {
         return characterPositionColumn;
     }
 
+    public List<Pair<Integer, Integer>> solutionPath = new ArrayList<>();
+
     @Override
-    public Solution getMazeSolution() {
+    public void generateSolution() {
 
         threadPool.execute(() -> {
+
             try {
                 Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
                     public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
@@ -216,6 +219,12 @@ public class Model extends Observable implements IModel {
                             toServer.writeObject(maze);
                             toServer.flush();
                             Solution mazeSolution = (Solution) fromServer.readObject();
+                            for (AState state : mazeSolution.getSolutionPath()) {
+                                Position p = ((MazeState) state).getCurrent_position();
+                                solutionPath.add(new Pair<>(p.getRowIndex(), p.getColumnIndex()));
+                            }
+
+
                         } catch (Exception var10) {
                             var10.printStackTrace();
                         }
@@ -226,12 +235,16 @@ public class Model extends Observable implements IModel {
             } catch (UnknownHostException var1) {
                 var1.printStackTrace();
             }
+            setChanged();
+            notifyObservers("solution");
         });
 
-
-        return null;
     }
 
+    @Override
+    public List<Pair<Integer, Integer>> getSolution() {
+        return solutionPath;
+    }
 
     public void saveMaze(String name) {
         File theDir = new File("Mazes");
@@ -271,14 +284,13 @@ public class Model extends Observable implements IModel {
             if (maze_file.exists()) {//if the file exists, it is means we solve thus maze in the past and we just need to read the file.
                 ois = new ObjectInputStream(new FileInputStream(maze_file.getPath()));
                 loadMaze = (Maze) ois.readObject();
-                maze=loadMaze;
+                maze = loadMaze;
             } else {//if we did not solve this maze in past.
                 throw new IllegalArgumentException();
             }
-        }catch (IllegalArgumentException e ) {
+        } catch (IllegalArgumentException e) {
             throw e;
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         } finally { /*Safe close of the streams */
             try {
                 if (ois != null)

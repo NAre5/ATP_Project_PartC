@@ -10,10 +10,12 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.util.Pair;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aviadjo on 3/9/2017.
@@ -86,14 +88,13 @@ public class MazeDisplayer extends Canvas {
         }
     }
 
-    public void drawSolution(Solution solution) throws Exception {
+    public void drawSolution(List<Pair<Integer, Integer>> solution) {
         if (solution != null) {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
             double cellHeight = canvasHeight / maze.length;
             double cellWidth = canvasWidth / maze[0].length;
 
-            ArrayList<AState> SolutionPath = solution.getSolutionPath();
             try {
                 Image SolutionImage = new Image(new FileInputStream(ImageFileNameSolution.get()));////////////
 
@@ -101,13 +102,10 @@ public class MazeDisplayer extends Canvas {
 //                gc.clearRect(0, 0, getWidth(), getHeight());
 
                 //Draw Maze
-                for (int i = 0; i < SolutionPath.size() - 1; i++) {
-                    Position p;
-                    if (SolutionPath.get(i) instanceof MazeState)
-                        p = ((MazeState) SolutionPath.get(i)).getCurrent_position();
-                    else
-                        throw new Exception("Solution State should be MazeState");
-                    gc.drawImage(SolutionImage, p.getColumnIndex() * cellWidth, p.getRowIndex() * cellHeight, cellWidth, cellHeight);
+                for (int i = 1; i < solution.size() - 1; i++) {
+//check good value and key <==> column row
+                    if (!solution.get(i).equals(new Pair<>(characterPositionRow,characterPositionColumn)))
+                        gc.drawImage(SolutionImage, solution.get(i).getValue() * cellWidth, solution.get(i).getKey() * cellHeight, cellWidth, cellHeight);
                 }
             } catch (FileNotFoundException e) {
                 //e.printStackTrace();
@@ -148,7 +146,6 @@ public class MazeDisplayer extends Canvas {
     public void setImageFileNameEnd(String imageFileNameEnd) {
         this.ImageFileNameEnd.set(imageFileNameEnd);
     }
-
 
 
     public String getImageFileNameCharacter() {

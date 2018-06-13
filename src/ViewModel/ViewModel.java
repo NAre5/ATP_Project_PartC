@@ -4,11 +4,8 @@ import Model.IModel;
 import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
-import algorithms.search.Solution;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,10 +13,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -46,26 +46,29 @@ public class ViewModel extends Observable implements Observer {
     public void update(Observable o, Object arg) {
         if (o == model) {
             //arg is Maze
-            characterPositionRowIndex = model.getCharacterPositionRow();
-            characterPositionColumnIndex = model.getCharacterPositionColumn();
-            if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
-                try {
-                    replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
+            if (arg.toString().equals("maze")) {
+                characterPositionRowIndex = model.getCharacterPositionRow();
+                characterPositionColumnIndex = model.getCharacterPositionColumn();
+                if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
+                    try {
+                        replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    showAlert("finished!!!");
                 }
-                showAlert("finished!!!");
+
             }
             setChanged();
-            notifyObservers();
+            notifyObservers(arg);
         }
     }
 
     public void replace_music(Media media) {
-        if (mediaPlayer!=null)
+        if (mediaPlayer != null)
             mediaPlayer.dispose();
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+//        mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.setAutoPlay(true);
     }
 
 
@@ -79,7 +82,9 @@ public class ViewModel extends Observable implements Observer {
 //        return model.getMaze();
     }
 
-    public Position getGoalPosition(){return model.getGoalPosition();}
+    public Position getGoalPosition() {
+        return model.getGoalPosition();
+    }
 
 
     public void moveCharacter(KeyCode movement) {
@@ -98,9 +103,15 @@ public class ViewModel extends Observable implements Observer {
         return characterPositionColumnIndex;
     }
 
-    public Solution solveMaze() {
-        return model.getMazeSolution();
+    public void solveMaze() {
+        model.generateSolution();
     }
+
+    public List<Pair<Integer, Integer>> getSolution() {
+        return model.getSolution();
+    }
+
+
 
     private void showAlert(String alertMessage) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -125,7 +136,7 @@ public class ViewModel extends Observable implements Observer {
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
             Scene scene = new Scene(root, 800, 700);
-            scene.getStylesheets().add(getClass().getResource("../View/" +sceneName + "Style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
             primaryStage.setScene(scene);
             AView view = fxmlLoader.getController();
             view.setViewModel(this);
@@ -135,15 +146,62 @@ public class ViewModel extends Observable implements Observer {
             e.printStackTrace();
         }
     }
-
-    public Parent setScene(String sceneName) {
+    public void raise(String sceneName) {
         try {
+            Stage aboutStage = new Stage();
+            aboutStage.setAlwaysOnTop(true);
+            aboutStage.setResizable(false);
+            aboutStage.setTitle(sceneName);
             FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource(sceneName + "View.fxml").openStream());
-            return root;
+            Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
+            Scene scene = new Scene(root, 800, 700);
+            try {
+                scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
+            }catch (Exception ignore){}
+            aboutStage.setScene(scene);
+            AView view = fxmlLoader.getController();
+            view.setViewModel(this);
+            this.addObserver(view);
+            aboutStage.initModality(Modality.APPLICATION_MODAL);
+            aboutStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
+
+
+    public void raiseStage(String sceneName) {
+        Stage aboutStage = new Stage();
+        aboutStage.setAlwaysOnTop(true);
+        aboutStage.setResizable(false);
+        aboutStage.setTitle(sceneName);
+
+        Parent root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            //change MyView.fxml to help.fxml after designed
+            fxmlLoader = new FXMLLoader();
+            root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
+        } catch (IOException e) {
+            showAlert("Exception!");
+        }
+        Scene scene = new Scene(root, 700, 400);
+        aboutStage.setScene(scene);
+        AView view = fxmlLoader.getController();
+        view.setViewModel(this);
+        this.addObserver(view);
+        aboutStage.initModality(Modality.APPLICATION_MODAL);
+        aboutStage.show();
+    }
+//    public Parent setScene(String sceneName) {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            Parent root = fxmlLoader.load(getClass().getResource(sceneName + "View.fxml").openStream());
+//            return root;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

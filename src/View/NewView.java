@@ -3,6 +3,7 @@ package View;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -35,8 +36,10 @@ public class NewView extends AView {
         }
 //        maze_columns_size.set(column);
 //        maze_rows_size.set(row);
-        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
+//        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
         viewModel.generateMaze(row,column);
+        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
     }
 
 
