@@ -84,10 +84,6 @@ public class MazeDisplayer extends Canvas {
 
                     }
                 }
-
-                //Draw Character
-                //gc.setFill(Color.RED);
-                //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
                 gc.drawImage(characterImage, characterPositionColumn * cellsize, characterPositionRow * cellsize, cellsize, cellsize);
             } catch (FileNotFoundException e) {
                 //e.printStackTrace();
@@ -104,14 +100,10 @@ public class MazeDisplayer extends Canvas {
             double cellsize = Math.min(cellHeight,cellWidth);
 
             try {
-                Image SolutionImage = new Image(new FileInputStream(ImageFileNameSolution.get()));////////////
-
+                Image SolutionImage = new Image(new FileInputStream(ImageFileNameSolution.get()));
                 GraphicsContext gc = getGraphicsContext2D();
-//                gc.clearRect(0, 0, getWidth(), getHeight());
-
                 //Draw Maze
                 for (int i = 0; i < solution.size() - 1; i++) {
-//check good value and key <==> column row
                     if (!solution.get(i).equals(new Pair<>(characterPositionRow,characterPositionColumn)))
                         gc.drawImage(SolutionImage, solution.get(i).getValue() * cellsize, solution.get(i).getKey() * cellsize, cellsize, cellsize);
                 }
@@ -122,7 +114,7 @@ public class MazeDisplayer extends Canvas {
 
     }
 
-    //region Propertiesa
+    //region Properties
     private StringProperty ImageFileNameWall = new SimpleStringProperty();
     private StringProperty ImageFileNameWalk = new SimpleStringProperty();
     private StringProperty ImageFileNameEnd = new SimpleStringProperty();
