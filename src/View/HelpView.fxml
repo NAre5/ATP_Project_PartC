@@ -14,11 +14,12 @@
       <Label layoutX="14.0" layoutY="171.0" text="CROSS UP-LEFT - NUMPAD 7" />
       <Label layoutX="14.0" layoutY="200.0" text="CROSS DOWN-RIGHT - NUMPAD 3" />
       <Label layoutX="14.0" layoutY="229.0" text="CROSS DOWN-LEFT - NUMPAD 1" />
-      <Label layoutX="14.0" layoutY="256.0" text="END - Do last move until the first wall" />
-      <Label layoutX="14.0" layoutY="283.0" text="Ctrl + Scroll - Zoom In/Out maze" />
+      <Label layoutX="15.0" layoutY="284.0" text="END - Do last move until the first wall" />
+      <Label layoutX="15.0" layoutY="309.0" text="Ctrl + Scroll - Zoom In/Out maze" />
       <Label layoutX="447.0" layoutY="14.0" text="Load:" />
       <Label layoutX="447.0" layoutY="39.0" text="Play saved maze" />
       <Label layoutX="272.0" layoutY="14.0" text="Save:" />
       <Label layoutX="271.0" layoutY="39.0" text="Save currrently maze in a file" />
+      <Label layoutX="15.0" layoutY="255.0" text="HOME - return to strat position" />
    </children>
 </AnchorPane>

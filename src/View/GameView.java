@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,6 +27,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameView extends AView implements Initializable {
@@ -33,6 +35,7 @@ public class GameView extends AView implements Initializable {
     public MazeDisplayer mazeDisplayer;
     public Button Solve;
     public MenuBar menu;
+    public VBox vb;
     boolean controlPressed = false;
     private double lastX;
     private double lastY;
@@ -61,6 +64,7 @@ public class GameView extends AView implements Initializable {
 
     //add disable button
     public void solveMaze(ActionEvent actionEvent) {
+
         try {
             viewModel.solveMaze();
         } catch (Exception e) {
@@ -173,37 +177,16 @@ public class GameView extends AView implements Initializable {
 //        }
 //    }
     public void load(ActionEvent event) {
-        File file = loadFile();
-        if (file == null)
-            return;
-        String path = file.getAbsolutePath();
-        viewModel.loadMaze(new File(path));
+        viewModel.loadMaze();
         event.consume();
     }
 
-    private File loadFile() {
-        JFileChooser fileChooser = new JFileChooser("Mazes");
-        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-            return fileChooser.getSelectedFile();
-        return null;
-    }
+
 
     public void saveMaze(ActionEvent event) {
-        File file = saveFile();
-        if (file == null)
-            return;
-        String path = file.getAbsolutePath();
-        viewModel.saveMaze(new File(path));
+        viewModel.saveMaze();
     }
 
-    private File saveFile() {
-        JFileChooser fileChooser = new JFileChooser("Mazes");
-        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            return file;
-        }
-        return null;
-    }
 
     public void StartMaze(ActionEvent actionEvent) {
         viewModel.switchScene((Stage) mazeDisplayer.getScene().getWindow(), "New");
@@ -248,42 +231,48 @@ public class GameView extends AView implements Initializable {
         keyEvent.consume();
     }
 
-    //    public void setResizeEvent(Scene scene) {
-////        long width = 0;
-////        long height = 0;
-////        scene.widthProperty().addListener(new ChangeListener<Number>() {
-////            @Override
-////            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-////                Scale newScale = new Scale();
-////                newScale.setPivotX(scene.getX() * (newSceneWidth.doubleValue()) / (oldSceneWidth.doubleValue()));
-////                newScale.setX(mazeDisplayer.getScaleX() * (newSceneWidth.doubleValue()) / (oldSceneWidth.doubleValue()));
-////                mazeDisplayer.getTransforms().add(newScale);
-////            }
-////        });
-////        scene.heightProperty().addListener(new ChangeListener<Number>() {
-////            @Override
-////            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-////                Scale newScale = new Scale();
-////                newScale.setPivotY(scene.getY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
-////                newScale.setY(mazeDisplayer.getScaleY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
-////                mazeDisplayer.getTransforms().add(newScale);
-////            }
-////        });
-////    }
     public void setResizeEvent(Scene scene) {
+        long width = 0;
+        long height = 0;
         scene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mazeDisplayer.redraw();
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                Scale newScale = new Scale();
+                newScale.setPivotX(scene.getX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
+                newScale.setX(mazeDisplayer.getScaleX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
+                mazeDisplayer.getTransforms().add(newScale);
+                vb.getTransforms().add(newScale);
+                menu.getTransforms().add(newScale);
             }
         });
         scene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mazeDisplayer.redraw();
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                Scale newScale = new Scale();
+                newScale.setPivotY(scene.getY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
+                newScale.setY(mazeDisplayer.getScaleY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
+                mazeDisplayer.getTransforms().add(newScale);
+                vb.getTransforms().add(newScale);
+                menu.getTransforms().add(newScale);
+
+
             }
         });
     }
+//    public void setResizeEvent(Scene scene) {
+//        scene.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                mazeDisplayer.redraw();
+//            }
+//        });
+//        scene.heightProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                mazeDisplayer.redraw();
+//            }
+//        });
+//    }
 
     public void DragMove(MouseEvent drg) {
         double basicHeight = mazeDisplayer.getHeight() / viewModel.getMaze().length;
@@ -312,13 +301,20 @@ public class GameView extends AView implements Initializable {
     }
 
 
-
-    public void Close(ActionEvent actionEvent)
-    {
-        viewModel.stopModel();
-        Stage stage = (Stage)mazeDisplayer.getScene().getWindow();
-        stage.close();
-        Platform.exit();
-        actionEvent.consume();
+    public void Close(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText("Are you sure you want exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            viewModel.stopModel();
+            Stage stage = (Stage) mazeDisplayer.getScene().getWindow();
+            stage.close();
+            actionEvent.consume();
+        } else {
+            actionEvent.consume();
+        }
     }
+
+
 }

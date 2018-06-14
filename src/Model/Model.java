@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import Server.*;
+import javafx.stage.FileChooser;
 import javafx.util.Pair;
 
 
@@ -81,7 +82,7 @@ public class Model extends Observable implements IModel {
                             toServer.flush();
                             byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                             InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                            byte[] decompressedMaze = new byte[100000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                            byte[] decompressedMaze = new byte[mazeDimensions[0]*mazeDimensions[1]+50 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                             is.read(decompressedMaze); //Fill decompressedMaze with bytes
                             maze = new Maze(decompressedMaze);
                             characterPositionColumn = maze.getStartPosition().getColumnIndex();
@@ -302,40 +303,12 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-//    public Maze loadMaze(String name) {
-//        ObjectInputStream ois = null;
-//        Maze loadMaze = null;
-//        try {
-//            File maze_file = new File("Mazes/" + name);//The path of the new file is the hash code for this maze
-//            if (maze_file.exists()) {//if the file exists, it is means we solve thus maze in the past and we just need to read the file.
-//                ois = new ObjectInputStream(new FileInputStream(maze_file.getPath()));
-//                loadMaze = (Maze) ois.readObject();
-//                maze = loadMaze;
-////                getMazeSolution();
-//                characterPositionRow = maze.getStartPosition().getRowIndex();
-//                characterPositionColumn = maze.getStartPosition().getColumnIndex();
-//            } else {//if we did not solve this maze in past.
-//                throw new IllegalArgumentException();
-//            }
-//        }catch (IllegalArgumentException e ) {
-//            throw e;
-//        }
-//        catch (Exception ignored) {
-//        } finally { /*Safe close of the streams */
-//            try {
-//                if (ois != null)
-//                    ois.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        setChanged();
-//        notifyObservers("maze");
-//        return loadMaze;
-//    }
+
     public void loadMaze(File file) {
         try {
+            if (file == null)
+                return;
+            String path = file.getAbsolutePath();
             InputStream out = new MyDecompressorInputStream(new FileInputStream(file.getAbsolutePath()));
             byte[] array = new byte[1002000];
             out.read(array);
@@ -351,4 +324,5 @@ public class Model extends Observable implements IModel {
         setChanged();
         notifyObservers("maze");
     }
+
 }

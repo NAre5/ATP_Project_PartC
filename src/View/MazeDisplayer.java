@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Aviadjo on 3/9/2017.
@@ -26,6 +27,7 @@ public class MazeDisplayer extends Canvas {
     private Position goalPosition;
     private int characterPositionRow = 1;
     private int characterPositionColumn = 1;
+
 
     public void setMaze(int[][] maze, Position goalPosition) {
         this.maze = maze;
@@ -50,6 +52,7 @@ public class MazeDisplayer extends Canvas {
 
     public void redraw() {
         if (maze != null) {
+
             double canvasHeight = getHeight();
 //            double canvasHeight = Math.min(getHeight(),getWidth());
             double canvasWidth = getWidth();
@@ -107,7 +110,7 @@ public class MazeDisplayer extends Canvas {
 //                gc.clearRect(0, 0, getWidth(), getHeight());
 
                 //Draw Maze
-                for (int i = 1; i < solution.size() - 1; i++) {
+                for (int i = 0; i < solution.size() - 1; i++) {
 //check good value and key <==> column row
                     if (!solution.get(i).equals(new Pair<>(characterPositionRow,characterPositionColumn)))
                         gc.drawImage(SolutionImage, solution.get(i).getValue() * cellsize, solution.get(i).getKey() * cellsize, cellsize, cellsize);

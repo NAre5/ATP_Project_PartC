@@ -23,7 +23,7 @@ public interface IModel {
     Position getGoalPosition();
 //    void saveMaze(String name);
     void saveMaze(File file);
-    void loadMaze(File name);
+    void loadMaze(File file);
     Position getStartPosition();
     void stopServers();
 //    Solution getSolution();

@@ -12,10 +12,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -36,6 +38,7 @@ public class ViewModel extends Observable implements Observer {
     private IModel model;
     private int characterPositionRowIndex;
     private int characterPositionColumnIndex;
+    private Scene currentscene;
 
     public IntegerProperty maze_rows_size;
     public IntegerProperty maze_columns_size;
@@ -128,14 +131,33 @@ public class ViewModel extends Observable implements Observer {
 //        model.saveMaze(name);
 //    }
 
-    public void loadMaze(File name) {
-        model.loadMaze(name);
+    public void loadMaze() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("Mazes"));
+        FileChooser.ExtensionFilter fileExtensions =
+                new FileChooser.ExtensionFilter(
+                        "Maze files", "*.maze");
+        fileChooser.getExtensionFilters().add(fileExtensions);
+        File savefile = fileChooser.showOpenDialog(currentscene.getWindow());
+        if(savefile==null)
+            return;
+        switchScene((Stage)currentscene.getWindow(), "Game");
+        model.loadMaze(savefile);
     }
 
-    public void saveMaze(File file)
-    {
-        model.saveMaze(file);
+    public void saveMaze() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter fileExtensions =
+                new FileChooser.ExtensionFilter(
+                        "Maze files", "*.maze");
+        fileChooser.getExtensionFilters().add(fileExtensions);
+        fileChooser.setInitialDirectory(new File("Mazes"));
+        File savefile = fileChooser.showSaveDialog(currentscene.getWindow());
+        if(savefile==null)
+            return;
+        model.saveMaze(savefile);
     }
+
     public void switchScene(Stage primaryStage, String sceneName) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -143,6 +165,7 @@ public class ViewModel extends Observable implements Observer {
             Scene scene = new Scene(root, 800, 700);
             scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
             primaryStage.setScene(scene);
+            currentscene = scene;
             AView view = fxmlLoader.getController();
             view.setViewModel(this);
             this.addObserver(view);
@@ -180,19 +203,21 @@ public class ViewModel extends Observable implements Observer {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent windowEvent) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Exit");
+                alert.setHeaderText("Are you sure you want exit?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     stopModel();
 //                    primaryStage.close();
-                    Platform.exit();
+//                    Platform.exit();
                 } else {
                     windowEvent.consume();
                 }
             }
         });
     }
-    public void stopModel()
-    {
+
+    public void stopModel() {
         model.stopServers();
     }
 }

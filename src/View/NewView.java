@@ -22,7 +22,9 @@ public class NewView extends AView {
     public TextField text_columnNum;
     public GridPane advanced_choose;
     public ToggleGroup level;
+    public RadioButton easy;
     public RadioButton medium;
+    public RadioButton hard;
 
 
     public void StartGame(ActionEvent actionEvent) {
@@ -31,7 +33,7 @@ public class NewView extends AView {
         try {
             row = Integer.parseInt(text_rowNum.getText());
             column = Integer.parseInt(text_columnNum.getText());
-            if(row<1||column<1)
+            if (row < 1 || column < 1)
                 throw new IllegalArgumentException();
         } catch (NumberFormatException e) {
             showAlert("Enter only number");
@@ -41,9 +43,7 @@ public class NewView extends AView {
             showAlert("Enter only number");
             actionEvent.consume();
             return;
-        }
-        catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             showAlert("Enter only positive number");
             actionEvent.consume();
             return;
@@ -51,8 +51,8 @@ public class NewView extends AView {
 //        maze_columns_size.set(column);
 //        maze_rows_size.set(row);
 //        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
-        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
-        viewModel.generateMaze(row,column);
+        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
+        viewModel.generateMaze(row, column);
 
     }
 
@@ -64,13 +64,11 @@ public class NewView extends AView {
             int i = Integer.parseInt(key);
 //        }catch (InvocationHandler e)
 //        {
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             if (keyEvent.getSource() == text_rowNum) {
                 text_rowNum.cancelEdit();
                 text_rowNum.cancelEdit();
-            }
-            else if (keyEvent.getSource() == text_columnNum)
+            } else if (keyEvent.getSource() == text_columnNum)
                 text_columnNum.cancelEdit();
         }
     }
@@ -91,33 +89,45 @@ public class NewView extends AView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        text_rowNum.setDisable(true);
+        text_columnNum.setDisable(true);
         level.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                switch (newValue.toString()){
-                    case "easy":
-                        text_columnNum.setText("10");
-                        text_rowNum.setText("10");
-                        break;
-                    case "medium":
-                        text_columnNum.setText("20");
-                        text_rowNum.setText("20");
-                        break;
-                    case "hard":
-                        text_columnNum.setText("50");
-                        text_rowNum.setText("50");
-                        break;
-                    default:
-                        text_columnNum.setText("10");
-                        text_rowNum.setText("10");
-                        break;
+                if (newValue == easy){
+                    text_columnNum.setText("10");
+                    text_rowNum.setText("10");
+                }
+                else if(newValue==medium) {
+                    text_columnNum.setText("20");
+                    text_rowNum.setText("20");
+                }
+                else {
+                    text_columnNum.setText("50");
+                    text_rowNum.setText("50");
                 }
             }
         });
-        medium.setSelected(true);
     }
+//        medium.setSelected(true);
+
 
     public void change_difficulty(ActionEvent actionEvent) {
+        if(!easy.isDisable()) {
+            easy.setDisable(true);
+            medium.setDisable(true);
+            hard.setDisable(true);
+            text_rowNum.setDisable(false);
+            text_columnNum.setDisable(false);
+        }
+        else
+        {
+            easy.setDisable(false);
+            medium.setDisable(false);
+            hard.setDisable(false);
+            text_rowNum.setDisable(true);
+            text_columnNum.setDisable(true);
 
+        }
     }
 }

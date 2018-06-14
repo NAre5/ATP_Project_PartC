@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import javax.swing.*;
 import java.io.File;
@@ -47,7 +48,7 @@ public class StartView extends AView implements Initializable {
     /**
      * switch to new scene from type "Load"
      *
-     * @param actionEvent
+//     * @param actionEvent
      */
 //    public void loadMaze(ActionEvent actionEvent) {
 //        try {
@@ -96,23 +97,11 @@ public class StartView extends AView implements Initializable {
 //        }
 //    }
     public void load(ActionEvent event) {
-        File file = loadFile();
-        if (file == null)
-            return;
-        String path = file.getAbsolutePath();
-        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "Game");
-        viewModel.loadMaze(new File(path));
-
+//        viewModel.switchScene(w, "Game");
+        viewModel.loadMaze();
         event.consume();
     }
 
-
-    private File loadFile() {
-        JFileChooser fileChooser = new JFileChooser("Mazes");
-        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-            return fileChooser.getSelectedFile();
-        return null;
-    }
 
     /**
      * switch to new scene from type "Help"
