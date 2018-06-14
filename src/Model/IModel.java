@@ -1,6 +1,7 @@
 package Model;
 
-import algorithms.mazeGenerators.Maze;
+//import algorithms.mazeGenerators.Maze;
+//import algorithms.mazeGenerators.Position;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;

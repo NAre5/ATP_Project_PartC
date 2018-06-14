@@ -46,6 +46,7 @@ public class Model extends Observable implements IModel {
     public void stopServers() {
         mgs.stop();
         sss.stop();
+        threadPool.shutdown();
     }
 
     private Maze maze;
@@ -220,7 +221,6 @@ public class Model extends Observable implements IModel {
     public void generateSolution() {
 
         threadPool.execute(() -> {
-
             try {
                 Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
                     public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
@@ -233,11 +233,9 @@ public class Model extends Observable implements IModel {
                             Solution mazeSolution = (Solution) fromServer.readObject();
                             solutionPath.clear();
                             for (AState state : mazeSolution.getSolutionPath()) {
-                                Position p = ((MazeState) state).getCurrent_position();
+                                Position p = ((MazeState)state).getCurrent_position();
                                 solutionPath.add(new Pair<>(p.getRowIndex(), p.getColumnIndex()));
                             }
-
-
                         } catch (Exception var10) {
                             var10.printStackTrace();
                         }

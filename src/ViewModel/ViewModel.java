@@ -209,7 +209,7 @@ public class ViewModel extends Observable implements Observer {
                 if (result.get() == ButtonType.OK) {
                     stopModel();
 //                    primaryStage.close();
-//                    Platform.exit();
+                    Platform.exit();
                 } else {
                     windowEvent.consume();
                 }
