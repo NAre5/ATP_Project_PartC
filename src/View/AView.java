@@ -14,12 +14,10 @@ import java.util.Observer;
 public abstract class AView implements IView, Observer,Initializable {
 
     protected ViewModel viewModel;
-    protected Scene currentscene;
 
     @Override
     public void setViewModel(ViewModel viewModel) {
         this.viewModel = viewModel;
-//        currentscene = new Scene();
         init();
     }
 
