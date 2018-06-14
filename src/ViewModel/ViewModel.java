@@ -38,7 +38,7 @@ public class ViewModel extends Observable implements Observer {
     private IModel model;
     private int characterPositionRowIndex;
     private int characterPositionColumnIndex;
-    private Scene currentscene;
+    public Scene currentscene;
 
     public IntegerProperty maze_rows_size;
     public IntegerProperty maze_columns_size;
@@ -57,11 +57,11 @@ public class ViewModel extends Observable implements Observer {
                 characterPositionRowIndex = model.getCharacterPositionRow();
                 characterPositionColumnIndex = model.getCharacterPositionColumn();
                 if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
-                    try {
-                        replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+////                        replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
+//                    } catch (URISyntaxException e) {
+//                        e.printStackTrace();
+//                    }
                     showAlert("finished!!!");
                 }
 

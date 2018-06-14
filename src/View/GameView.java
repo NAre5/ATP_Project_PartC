@@ -92,7 +92,6 @@ public class GameView extends AView implements Initializable {
     }
 
 
-
     public void saveMaze(ActionEvent event) {
         viewModel.saveMaze();
     }
@@ -207,7 +206,6 @@ public class GameView extends AView implements Initializable {
             lastY = drg.getY();
             viewModel.moveCharacter(KeyCode.NUMPAD8);
         }
-
     }
 
 
