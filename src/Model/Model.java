@@ -83,7 +83,7 @@ public class Model extends Observable implements IModel {
                             toServer.flush();
                             byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                             InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                            byte[] decompressedMaze = new byte[mazeDimensions[0]*mazeDimensions[1]+50 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                            byte[] decompressedMaze = new byte[mazeDimensions[0] * mazeDimensions[1] + mazeDimensions[0] + mazeDimensions[1] /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                             is.read(decompressedMaze); //Fill decompressedMaze with bytes
                             maze = new Maze(decompressedMaze);
                             characterPositionColumn = maze.getStartPosition().getColumnIndex();
@@ -181,7 +181,7 @@ public class Model extends Observable implements IModel {
                     break;
                 case HOME:
                     characterPositionRow = getStartPosition().getRowIndex();
-                    characterPositionColumn= getStartPosition().getColumnIndex();
+                    characterPositionColumn = getStartPosition().getColumnIndex();
                     break;
                 case END:
                     while (true) {
@@ -233,7 +233,7 @@ public class Model extends Observable implements IModel {
                             Solution mazeSolution = (Solution) fromServer.readObject();
                             solutionPath.clear();
                             for (AState state : mazeSolution.getSolutionPath()) {
-                                Position p = ((MazeState)state).getCurrent_position();
+                                Position p = ((MazeState) state).getCurrent_position();
                                 solutionPath.add(new Pair<>(p.getRowIndex(), p.getColumnIndex()));
                             }
                         } catch (Exception var10) {

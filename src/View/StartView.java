@@ -43,7 +43,7 @@ public class StartView extends AView implements Initializable {
      */
     public void createNewMaze(ActionEvent actionEvent) {
 //        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
-        switchScene((Stage) NEW.getScene().getWindow(), "New");
+        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
     }
 
     /**
@@ -64,7 +64,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openHelp(ActionEvent actionEvent) {
-        raiseStage("Help");
+        viewModel.raiseStage("Help");
     }
 
     /**
@@ -73,7 +73,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openAbout(ActionEvent actionEvent) {
-        raiseStage("About");
+        viewModel.raiseStage("About");
     }
 
     @Override

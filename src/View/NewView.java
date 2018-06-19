@@ -43,8 +43,7 @@ public class NewView extends AView {
             actionEvent.consume();
             return;
         }
-//        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
-        switchScene((Stage) next.getScene().getWindow(), "Game");
+        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
         viewModel.generateMaze(row, column);
 
     }
