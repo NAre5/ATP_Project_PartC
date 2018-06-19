@@ -43,7 +43,7 @@ public class StartView extends AView implements Initializable {
      */
     public void createNewMaze(ActionEvent actionEvent) {
 //        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
-        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
+        switchScene((Stage) NEW.getScene().getWindow(), "New");
     }
 
     /**
@@ -53,7 +53,7 @@ public class StartView extends AView implements Initializable {
      */
     public void load(ActionEvent event) {
 //        viewModel.switchScene(w, "Game");
-        viewModel.loadMaze();
+        viewModel.loadMaze(NEW.getScene());
         event.consume();
     }
 
@@ -64,7 +64,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openHelp(ActionEvent actionEvent) {
-        viewModel.raiseStage("Help");
+        raiseStage("Help");
     }
 
     /**
@@ -73,11 +73,12 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openAbout(ActionEvent actionEvent) {
-        viewModel.raiseStage("About");
+        raiseStage("About");
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (arg != null && arg instanceof File)
+            switchScene((Stage) NEW.getScene().getWindow(),"Game");
     }
 }

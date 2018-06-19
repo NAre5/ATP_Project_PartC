@@ -6,6 +6,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Observable;
@@ -20,6 +23,8 @@ public class NewView extends AView {
     public RadioButton easy;
     public RadioButton medium;
     public RadioButton hard;
+    public Pane pane;
+    public ImageView background;
 
 
     public void StartGame(ActionEvent actionEvent) {
@@ -43,7 +48,7 @@ public class NewView extends AView {
             actionEvent.consume();
             return;
         }
-        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
+        switchScene((Stage) next.getScene().getWindow(), "Game");
         viewModel.generateMaze(row, column);
 
     }
@@ -63,6 +68,9 @@ public class NewView extends AView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        background.setImage(new Image(getClass().getResourceAsStream("/Images/Oak.jpg")));
+        background.fitHeightProperty().bind(pane.heightProperty());
+        background.fitWidthProperty().bind(pane.widthProperty());
         text_rowNum.setDisable(true);
         text_columnNum.setDisable(true);
         level.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {

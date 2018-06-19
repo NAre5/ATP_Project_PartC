@@ -89,30 +89,30 @@ public class GameView extends AView implements Initializable {
 
 
     public void load(ActionEvent event) {
-        viewModel.loadMaze();
+        viewModel.loadMaze(menu.getScene());
         event.consume();
     }
 
 
     public void saveMaze(ActionEvent event) {
-        viewModel.saveMaze();
+        viewModel.saveMaze(menu.getScene());
     }
 
 
     public void StartMaze(ActionEvent actionEvent) {
-        viewModel.switchScene((Stage) mazeDisplayer.getScene().getWindow(), "New");
+        switchScene((Stage) mazeDisplayer.getScene().getWindow(), "New");
     }
 
     public void About(ActionEvent actionEvent) {
-        viewModel.raiseStage("About");
+        raiseStage("About");
     }
 
     public void openHelp(ActionEvent actionEvent) {
-        viewModel.raiseStage("Help");
+        raiseStage("Help");
     }
 
     public void openProperties(ActionEvent actionEvent) {
-        viewModel.raiseStage("Properties");
+        raiseStage("Properties");
     }
 
     public void scrollEvent(ScrollEvent scroll) {

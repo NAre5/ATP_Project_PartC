@@ -59,32 +59,32 @@ public class MazeDisplayer extends Canvas {
 //            double canvasWidth = Math.min(getHeight(),getWidth());
             double cellHeight = canvasHeight / maze.length;
             double cellWidth = canvasWidth / maze[0].length;
-            double cellsize = Math.min(cellHeight,cellWidth);
+            double cellsize = Math.min(cellHeight, cellWidth);
 
 
-                Image wallImage = new Image(ClassLoader.getSystemResourceAsStream("Images/wall4.jpg"));
-                Image walkImage = new Image(ClassLoader.getSystemResourceAsStream("Images/walk.jpg"));
-                Image characterImage = new Image(ClassLoader.getSystemResourceAsStream("Images/character4.jpg"));
-                Image EndImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Moltres.jpg"));
+            Image wallImage = new Image(ClassLoader.getSystemResourceAsStream("Images/wall4.jpg"));
+            Image walkImage = new Image(ClassLoader.getSystemResourceAsStream("Images/walk.jpg"));
+            Image characterImage = new Image(ClassLoader.getSystemResourceAsStream("Images/character4.jpg"));
+            Image EndImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Moltres.jpg"));
 
-                GraphicsContext gc = getGraphicsContext2D();
-                gc.clearRect(0, 0, getWidth(), getHeight());
+            GraphicsContext gc = getGraphicsContext2D();
+            gc.clearRect(0, 0, getWidth(), getHeight());
 
-                //Draw Maze
-                for (int i = 0; i < maze.length; i++) {
-                    for (int j = 0; j < maze[i].length; j++) {
-                        if (goalPosition.equals(i, j))
-                            gc.drawImage(EndImage, j * cellsize, i * cellsize, cellsize, cellsize);
-                        else if (maze[i][j] == 1) {
-                            //gc.fillRect(i * cellHeight, j * cellWidth, cellHeight, cellWidth);
-                            gc.drawImage(wallImage, j * cellsize, i * cellsize, cellsize, cellsize);
-                        } else
-                            gc.drawImage(walkImage, j * cellsize, i * cellsize, cellsize, cellsize);
+            //Draw Maze
+            for (int i = 0; i < maze.length; i++) {
+                for (int j = 0; j < maze[i].length; j++) {
+                    if (goalPosition.equals(i, j))
+                        gc.drawImage(EndImage, j * cellsize, i * cellsize, cellsize, cellsize);
+                    else if (maze[i][j] == 1) {
+                        //gc.fillRect(i * cellHeight, j * cellWidth, cellHeight, cellWidth);
+                        gc.drawImage(wallImage, j * cellsize, i * cellsize, cellsize, cellsize);
+                    } else
+                        gc.drawImage(walkImage, j * cellsize, i * cellsize, cellsize, cellsize);
 
 
-                    }
                 }
-                gc.drawImage(characterImage, characterPositionColumn * cellsize, characterPositionRow * cellsize, cellsize, cellsize);
+            }
+            gc.drawImage(characterImage, characterPositionColumn * cellsize, characterPositionRow * cellsize, cellsize, cellsize);
 
         }
     }
@@ -95,16 +95,16 @@ public class MazeDisplayer extends Canvas {
             double canvasWidth = getWidth();
             double cellHeight = canvasHeight / maze.length;
             double cellWidth = canvasWidth / maze[0].length;
-            double cellsize = Math.min(cellHeight,cellWidth);
+            double cellsize = Math.min(cellHeight, cellWidth);
 
-                Image SolutionImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Pikachu.jpg"));
-                GraphicsContext gc = getGraphicsContext2D();
-                //Draw Maze
-                for (int i = 0; i < solution.size() - 1; i++) {
-                    if (!solution.get(i).equals(new Pair<>(characterPositionRow,characterPositionColumn)))
-                        gc.drawImage(SolutionImage, solution.get(i).getValue() * cellsize, solution.get(i).getKey() * cellsize, cellsize, cellsize);
-                }
-                //e.printStackTrace();
+            Image SolutionImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Pikachu.jpg"));
+            GraphicsContext gc = getGraphicsContext2D();
+            //Draw Maze
+            for (int i = 0; i < solution.size() - 1; i++) {
+                if (!solution.get(i).equals(new Pair<>(characterPositionRow, characterPositionColumn)))
+                    gc.drawImage(SolutionImage, solution.get(i).getValue() * cellsize, solution.get(i).getKey() * cellsize, cellsize, cellsize);
+            }
+            //e.printStackTrace();
         }
 
     }
