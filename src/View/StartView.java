@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -25,10 +28,14 @@ import java.util.ResourceBundle;
 
 public class StartView extends AView implements Initializable {
     public Button NEW;
+    public BorderPane borderPane;
+    public ImageView background;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("hi i am here");
+        background.setImage(new Image(getClass().getResourceAsStream("/Images/PikachuWalk.gif")));
+        background.fitHeightProperty().bind(borderPane.heightProperty());
+        background.fitWidthProperty().bind(borderPane.widthProperty());
     }
 
     @Override
@@ -78,7 +85,8 @@ public class StartView extends AView implements Initializable {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg != null && arg instanceof File)
-            switchScene((Stage) NEW.getScene().getWindow(),"Game");
+        if (arg != null && arg instanceof File) {
+            switchScene((Stage) NEW.getScene().getWindow(), "Game");
+        }
     }
 }

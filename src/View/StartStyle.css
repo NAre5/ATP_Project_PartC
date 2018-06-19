@@ -1,7 +1,7 @@
 .root {
     /*-fx-background-image: url("../../../resources/Images/200.gif");*/
-    -fx-background-image: url("PikachuWalk.gif");
-    -fx-background-size: stretch;
+    /*-fx-background-image: url("PikachuWalk.gif");*/
+    /*-fx-background-size: stretch;*/
     height: 100%;
 }
 

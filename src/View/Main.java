@@ -33,9 +33,9 @@ public class Main extends Application {
 //        scene.getStylesheets().add(getClass().getResource("StartStyle.css").toExternalForm());
 //        viewModel.switchScene(primaryStage,"Start");
         AView view = fxmlLoader.getController();
+//        viewModel.addObserver(view);
         view.setViewModel(viewModel);
         view.switchScene(primaryStage,"Start");
-//        viewModel.addObserver(view);
         viewModel.SetStageCloseEvent(primaryStage);
         primaryStage.show();
     }

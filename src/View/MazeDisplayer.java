@@ -28,11 +28,11 @@ public class MazeDisplayer extends Canvas {
     private int characterPositionRow = 1;
     private int characterPositionColumn = 1;
 
+    public StringProperty pokemon_name = new SimpleStringProperty();
 
     public void setMaze(int[][] maze, Position goalPosition) {
         this.maze = maze;
         this.goalPosition = goalPosition;
-
         redraw();
     }
 
@@ -65,7 +65,7 @@ public class MazeDisplayer extends Canvas {
             Image wallImage = new Image(ClassLoader.getSystemResourceAsStream("Images/wall4.jpg"));
             Image walkImage = new Image(ClassLoader.getSystemResourceAsStream("Images/walk.jpg"));
             Image characterImage = new Image(ClassLoader.getSystemResourceAsStream("Images/character4.jpg"));
-            Image EndImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Moltres.jpg"));
+            Image EndImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/"+pokemon_name.getValue()+".jpg"));
 
             GraphicsContext gc = getGraphicsContext2D();
             gc.clearRect(0, 0, getWidth(), getHeight());
@@ -73,14 +73,13 @@ public class MazeDisplayer extends Canvas {
             //Draw Maze
             for (int i = 0; i < maze.length; i++) {
                 for (int j = 0; j < maze[i].length; j++) {
-                    if (goalPosition.equals(i, j))
-                        gc.drawImage(EndImage, j * cellsize, i * cellsize, cellsize, cellsize);
-                    else if (maze[i][j] == 1) {
+                    if (maze[i][j] == 1) {
                         //gc.fillRect(i * cellHeight, j * cellWidth, cellHeight, cellWidth);
                         gc.drawImage(wallImage, j * cellsize, i * cellsize, cellsize, cellsize);
                     } else
                         gc.drawImage(walkImage, j * cellsize, i * cellsize, cellsize, cellsize);
-
+                    if (goalPosition.equals(i, j))
+                        gc.drawImage(EndImage, j * cellsize, i * cellsize, cellsize, cellsize);
 
                 }
             }

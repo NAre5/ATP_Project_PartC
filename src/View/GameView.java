@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.ViewModel;
 import algorithms.mazeGenerators.Position;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -25,6 +27,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -64,6 +67,17 @@ public class GameView extends AView implements Initializable {
 
     }
 
+    @Override
+    public void setViewModel(ViewModel viewModel) {
+        super.setViewModel(viewModel);
+        mazeDisplayer.pokemon_name.bind(viewModel.pokemon_name);
+        try {
+            viewModel.replace_music(new Media(ClassLoader.getSystemResource("music/PokemonRedBlue.mp3").toURI().toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
     //add disable button
     public void solveMaze(ActionEvent actionEvent) {
 
@@ -90,6 +104,11 @@ public class GameView extends AView implements Initializable {
 
     public void load(ActionEvent event) {
         viewModel.loadMaze(menu.getScene());
+        try {
+            viewModel.replace_music(new Media(ClassLoader.getSystemResource("music/PokemonRedBlue.mp3").toURI().toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         event.consume();
     }
 

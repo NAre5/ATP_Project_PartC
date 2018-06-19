@@ -1,5 +1,6 @@
 package View;
 
+import ViewModel.ViewModel;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
@@ -25,7 +27,8 @@ public class NewView extends AView {
     public RadioButton hard;
     public Pane pane;
     public ImageView background;
-
+    public ComboBox<String> comboBox;
+    public ImageView pokemon_view;
 
     public void StartGame(ActionEvent actionEvent) {
         int row;
@@ -55,7 +58,8 @@ public class NewView extends AView {
 
 
     @Override
-    public void update(Observable o, Object arg) {}
+    public void update(Observable o, Object arg) {
+    }
 
     @Override
     protected void init() {
@@ -68,6 +72,17 @@ public class NewView extends AView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        String[] names = {"Articuno", "Dragonite", "Mew", "Mewtwo", "Missingno", "Moltres", "Zapdos"};
+
+        comboBox.getItems().addAll(names);
+        comboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                pokemon_view.setImage(new Image(getClass().getResourceAsStream("/Images/pokemon/" + newValue + ".jpg")));
+            }
+        });
+        comboBox.getSelectionModel().selectFirst();
+
         background.setImage(new Image(getClass().getResourceAsStream("/Images/Oak.jpg")));
         background.fitHeightProperty().bind(pane.heightProperty());
         background.fitWidthProperty().bind(pane.widthProperty());
@@ -76,15 +91,13 @@ public class NewView extends AView {
         level.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if (newValue == easy){
+                if (newValue == easy) {
                     text_columnNum.setText("10");
                     text_rowNum.setText("10");
-                }
-                else if(newValue==medium) {
-                    text_columnNum.setText("20");
-                    text_rowNum.setText("20");
-                }
-                else {
+                } else if (newValue == medium) {
+                    text_columnNum.setText("25");
+                    text_rowNum.setText("25");
+                } else {
                     text_columnNum.setText("50");
                     text_rowNum.setText("50");
                 }
@@ -92,16 +105,22 @@ public class NewView extends AView {
         });
     }
 
+    @Override
+    public void setViewModel(ViewModel viewModel) {
+        super.setViewModel(viewModel);
+//        comboBox.valueProperty().bind(viewModel.pokemon_name);
+        viewModel.pokemon_name.bind(comboBox.valueProperty());
+
+    }
+
     public void change_difficulty(ActionEvent actionEvent) {
-        if(!easy.isDisable()) {
+        if (!easy.isDisable()) {
             easy.setDisable(true);
             medium.setDisable(true);
             hard.setDisable(true);
             text_rowNum.setDisable(false);
             text_columnNum.setDisable(false);
-        }
-        else
-        {
+        } else {
             easy.setDisable(false);
             medium.setDisable(false);
             hard.setDisable(false);

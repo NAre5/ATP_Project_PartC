@@ -32,6 +32,7 @@ public abstract class AView implements IView, Observer,Initializable {
 
     public void switchScene(Stage primaryStage, String sceneName) {
         try {
+            if(viewModel.mediaPlayer!=null){viewModel.mediaPlayer.dispose();}
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource(sceneName + "View.fxml").openStream());
             Scene scene = new Scene(root, 800, 700);

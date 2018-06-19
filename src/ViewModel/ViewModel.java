@@ -1,31 +1,25 @@
 package ViewModel;
 
 import Model.IModel;
-import View.AView;
-import View.View;
-import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Observable;
@@ -44,10 +38,13 @@ public class ViewModel extends Observable implements Observer {
     public IntegerProperty maze_rows_size;
     public IntegerProperty maze_columns_size;
 
+    public StringProperty pokemon_name;
+
     public ViewModel(IModel model) {
         this.model = model;
         maze_rows_size = new SimpleIntegerProperty();
         maze_columns_size = new SimpleIntegerProperty();
+        pokemon_name = new SimpleStringProperty("Articuno");
     }
 
     @Override
@@ -58,12 +55,12 @@ public class ViewModel extends Observable implements Observer {
                 characterPositionRowIndex = model.getCharacterPositionRow();
                 characterPositionColumnIndex = model.getCharacterPositionColumn();
                 if (model.getGoalPosition().equals(new Position(characterPositionRowIndex, characterPositionColumnIndex))) {
-//                    try {
-////                        replace_music(new Media(ClassLoader.getSystemResource("music/pistols_drake.mp3").toURI().toString()));//finish music
-//                    } catch (URISyntaxException e) {
-//                        e.printStackTrace();
-//                    }
-                    showAlert("finished!!!");
+                    try {
+                        replace_music(new Media(ClassLoader.getSystemResource("music/battleOver.mp3").toURI().toString()));//finish music
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    showAlert("Gotcha!!!");
                 }
 
             }
@@ -75,8 +72,8 @@ public class ViewModel extends Observable implements Observer {
     public void replace_music(Media media) {
         if (mediaPlayer != null)
             mediaPlayer.dispose();
-//        mediaPlayer = new MediaPlayer(media);
-//        mediaPlayer.setAutoPlay(true);
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
     }
 
 
@@ -138,9 +135,11 @@ public class ViewModel extends Observable implements Observer {
         if (savefile == null)
             return;
         notifyObservers(savefile);
-//        switchScene((Stage) currentscene.getWindow(), "Game");
         model.loadMaze(savefile);
+//        switchScene((Stage) currentscene.getWindow(), "Game");
+
     }
+
 
     public void saveMaze(Scene currentscene) {
         File mazesDir = new File("Mazes");
