@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -39,6 +40,7 @@ public class GameView extends AView implements Initializable {
     boolean controlPressed = false;
     private double lastX;
     private double lastY;
+    public BorderPane borderPane;
 
     public void update(Observable o, Object arg) {
         if (o == viewModel) {
@@ -98,19 +100,19 @@ public class GameView extends AView implements Initializable {
 
 
     public void StartMaze(ActionEvent actionEvent) {
-        viewModel.switchScene((Stage) mazeDisplayer.getScene().getWindow(), "New");
+        switchScene((Stage) mazeDisplayer.getScene().getWindow(), "New");
     }
 
     public void About(ActionEvent actionEvent) {
-        viewModel.raiseStage("About");
+        raiseStage("About");
     }
 
     public void openHelp(ActionEvent actionEvent) {
-        viewModel.raiseStage("Help");
+        raiseStage("Help");
     }
 
     public void openProperties(ActionEvent actionEvent) {
-        viewModel.raiseStage("Properties");
+        raiseStage("Properties");
     }
 
     public void scrollEvent(ScrollEvent scroll) {
@@ -141,44 +143,52 @@ public class GameView extends AView implements Initializable {
     }
 
     public void setResizeEvent(Scene scene) {
-        long width = 0;
-        long height = 0;
         scene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 Scale newScale = new Scale();
-                newScale.setPivotX(scene.getX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
-                newScale.setX(mazeDisplayer.getScaleX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
+                double old = oldSceneWidth.doubleValue() - vb.getWidth();
+                double neww = newSceneWidth.doubleValue() - vb.getWidth();
+                newScale.setPivotX(mazeDisplayer.getLayoutX() * (neww) / (old));
+                newScale.setX(mazeDisplayer.getScaleX() * (neww) / (old));
                 mazeDisplayer.getTransforms().add(newScale);
-                vb.getTransforms().add(newScale);
-                menu.getTransforms().add(newScale);
             }
         });
         scene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 Scale newScale = new Scale();
-                newScale.setPivotY(scene.getY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
-                newScale.setY(mazeDisplayer.getScaleY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
+                double old = oldSceneHeight.doubleValue() - menu.getHeight();
+                double neww = newSceneHeight.doubleValue() - menu.getHeight();
+                newScale.setPivotY(mazeDisplayer.getLayoutY() * (neww) / (old));
+                newScale.setY(mazeDisplayer.getScaleY() * (neww) / (old));
                 mazeDisplayer.getTransforms().add(newScale);
-                vb.getTransforms().add(newScale);
-                menu.getTransforms().add(newScale);
-
-
             }
         });
     }
 //    public void setResizeEvent(Scene scene) {
 //        scene.widthProperty().addListener(new ChangeListener<Number>() {
 //            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 //                mazeDisplayer.redraw();
+//                Scale newScale = new Scale();
+//                newScale.setPivotX(scene.getX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
+//                newScale.setX(mazeDisplayer.getScaleX() * (newSceneWidth.doubleValue() - vb.getMaxWidth()) / (oldSceneWidth.doubleValue() - vb.getMaxWidth()));
+////                mazeDisplayer.getTransforms().add(newScale);
+//                vb.getTransforms().add(newScale);
+//                menu.getTransforms().add(newScale);
 //            }
 //        });
 //        scene.heightProperty().addListener(new ChangeListener<Number>() {
 //            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
 //                mazeDisplayer.redraw();
+//                Scale newScale = new Scale();
+//                newScale.setPivotY(scene.getY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
+//                newScale.setY(mazeDisplayer.getScaleY() * (newSceneHeight.doubleValue() - menu.getMaxHeight()) / (oldSceneHeight.doubleValue() - menu.getMaxHeight()));
+//                mazeDisplayer.getTransforms().add(newScale);
+//                vb.getTransforms().add(newScale);
+//                menu.getTransforms().add(newScale);
 //            }
 //        });
 //    }

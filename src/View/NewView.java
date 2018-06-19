@@ -5,12 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
@@ -20,7 +16,6 @@ public class NewView extends AView {
     public Button next;
     public TextField text_rowNum;
     public TextField text_columnNum;
-    public GridPane advanced_choose;
     public ToggleGroup level;
     public RadioButton easy;
     public RadioButton medium;
@@ -48,35 +43,15 @@ public class NewView extends AView {
             actionEvent.consume();
             return;
         }
-//        maze_columns_size.set(column);
-//        maze_rows_size.set(row);
-//        viewModel.switchScene((Stage)next.getScene().getWindow(),"Game");
-        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
+//        viewModel.switchScene((Stage) next.getScene().getWindow(), "Game");
+        switchScene((Stage) next.getScene().getWindow(), "Game");
         viewModel.generateMaze(row, column);
 
     }
 
 
-    public void ValidNumber(KeyEvent keyEvent) {
-        try {
-            String keyev = keyEvent.getCode().toString();
-            String key = keyev.substring(5);
-            int i = Integer.parseInt(key);
-//        }catch (InvocationHandler e)
-//        {
-        } catch (Exception e) {
-            if (keyEvent.getSource() == text_rowNum) {
-                text_rowNum.cancelEdit();
-                text_rowNum.cancelEdit();
-            } else if (keyEvent.getSource() == text_columnNum)
-                text_columnNum.cancelEdit();
-        }
-    }
-
     @Override
-    public void update(Observable o, Object arg) {
-
-    }
+    public void update(Observable o, Object arg) {}
 
     @Override
     protected void init() {
@@ -109,8 +84,6 @@ public class NewView extends AView {
             }
         });
     }
-//        medium.setSelected(true);
-
 
     public void change_difficulty(ActionEvent actionEvent) {
         if(!easy.isDisable()) {
@@ -127,7 +100,6 @@ public class NewView extends AView {
             hard.setDisable(false);
             text_rowNum.setDisable(true);
             text_columnNum.setDisable(true);
-
         }
     }
 }

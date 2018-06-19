@@ -141,7 +141,7 @@ public class ViewModel extends Observable implements Observer {
         File savefile = fileChooser.showOpenDialog(currentscene.getWindow());
         if(savefile==null)
             return;
-        switchScene((Stage)currentscene.getWindow(), "Game");
+//        switchScene((Stage)currentscene.getWindow(), "Game");
         model.loadMaze(savefile);
     }
 
@@ -158,46 +158,73 @@ public class ViewModel extends Observable implements Observer {
         model.saveMaze(savefile);
     }
 
-    public void switchScene(Stage primaryStage, String sceneName) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
-            Scene scene = new Scene(root, 800, 700);
-            scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
-            primaryStage.setScene(scene);
-            currentscene = scene;
-            AView view = fxmlLoader.getController();
-            view.setViewModel(this);
-            this.addObserver(view);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//    public void switchScene(Stage primaryStage, String sceneName) {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            try {
+//                System.out.println(getClass().getResource("StartView.fxml"));
+//            }catch (Exception e){}
+//            try {
+//                System.out.println("1" + getClass().getResourceAsStream("../").toString());
+//            }catch (Exception e){}
+//            try {
+//                System.out.println("2"+getClass().getResourceAsStream("../View").toString());
+//            }catch (Exception e){}
+//            try{
+//            System.out.println("3"+getClass().getResourceAsStream(""));
+//            }catch (Exception e){}
+//            try{
+//            System.out.println("4"+getClass().getResourceAsStream("StartView.fxml").toString());
+//            }catch (Exception e){}
+//            try{
+//            System.out.println("5"+getClass().getResourceAsStream("View/StartView.fxml").toString());
+//            }catch (Exception e){}
+//            Parent root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
+//            Scene scene = new Scene(root, 800, 700);
+//            scene.getStylesheets().add(getClass().getResource("../View/" + sceneName + "Style.css").toExternalForm());
+//            primaryStage.setScene(scene);
+//            currentscene = scene;
+//            AView view = fxmlLoader.getController();
+//            view.setViewModel(this);
+//            this.addObserver(view);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public Scene getCurrentscene()
+    {
+        return currentscene;
+    }
+    public void setCurrentscene(Scene scene)
+    {
+        this.currentscene = scene;
     }
 
 
-    public void raiseStage(String sceneName) {
-        Stage aboutStage = new Stage();
-        aboutStage.setAlwaysOnTop(true);
-        aboutStage.setResizable(false);
-        aboutStage.setTitle(sceneName);
 
-        Parent root = null;
-        FXMLLoader fxmlLoader = null;
-        try {
-            //change MyView.fxml to help.fxml after designed
-            fxmlLoader = new FXMLLoader();
-            root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
-        } catch (IOException e) {
-            showAlert("Exception!");
-        }
-        Scene scene = new Scene(root, 600, 650);
-        aboutStage.setScene(scene);
-        AView view = fxmlLoader.getController();
-        view.setViewModel(this);
-        this.addObserver(view);
-        aboutStage.initModality(Modality.APPLICATION_MODAL);
-        aboutStage.show();
-    }
+//    public void raiseStage(String sceneName) {
+//        Stage aboutStage = new Stage();
+//        aboutStage.setAlwaysOnTop(true);
+//        aboutStage.setResizable(true);
+//        aboutStage.setTitle(sceneName);
+//
+//        Parent root = null;
+//        FXMLLoader fxmlLoader = null;
+//        try {
+//            //change MyView.fxml to help.fxml after designed
+//            fxmlLoader = new FXMLLoader();
+//            root = fxmlLoader.load(getClass().getResource("../View/" + sceneName + "View.fxml").openStream());
+//        } catch (IOException e) {
+//            showAlert("Exception!");
+//        }
+//        Scene scene = new Scene(root, 600, 650);
+//        aboutStage.setScene(scene);
+//        AView view = fxmlLoader.getController();
+//        view.setViewModel(this);
+//        this.addObserver(view);
+////        aboutStage.initModality(Modality.APPLICATION_MODAL);
+//        aboutStage.show();
+//    }
 
     public void SetStageCloseEvent(Stage primaryStage) {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

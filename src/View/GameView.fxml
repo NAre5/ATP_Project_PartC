@@ -8,10 +8,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#KeyPressed" onKeyReleased="#keyRelease" onMouseDragged="#DragMove" prefHeight="400.0" prefWidth="600.0" stylesheets="GameStyle.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GameView">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#KeyPressed" onKeyReleased="#keyRelease" onMouseDragged="#DragMove" prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GameView">
     <top>
         <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
             <menus>
@@ -46,7 +47,11 @@
         </MenuBar>
     </top>
     <center>
-        <MazeDisplayer fx:id="mazeDisplayer" height="600.0" imageFileNameCharacter="resourcesd/Images/character4.jpg" imageFileNameEnd="resourcesd/Images/pokemon/Moltres.jpg" imageFileNameSolution="resourcesd/Images/pokemon/pikachu.jpg" imageFileNameWalk="resourcesd/Images/walk.jpg" imageFileNameWall="resourcesd/Images/wall4.jpg" onScroll="#scrollEvent" width="600.0" />
+      <Pane prefHeight="375.0" prefWidth="530.0">
+         <children>
+              <MazeDisplayer fx:id="mazeDisplayer" height="650.0"  onScroll="#scrollEvent" width="650.0" />
+         </children>
+      </Pane>
     </center>
    <left>
       <VBox fx:id="vb" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
@@ -63,7 +68,6 @@
               </rowConstraints>
                <children>
                   <Button fx:id="Solve" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solveMaze" prefHeight="149.0" prefWidth="100.0" text="Solve" GridPane.rowIndex="1" />
-                  <Button fx:id="hint" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solveMaze" prefHeight="111.0" prefWidth="100.0" text="df" GridPane.rowIndex="2" GridPane.rowSpan="2" />
                </children>
             </GridPane>
          </children>

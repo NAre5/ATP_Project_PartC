@@ -61,11 +61,11 @@ public class MazeDisplayer extends Canvas {
             double cellWidth = canvasWidth / maze[0].length;
             double cellsize = Math.min(cellHeight,cellWidth);
 
-            try {
-                Image wallImage = new Image(new FileInputStream(ImageFileNameWall.get()));
-                Image walkImage = new Image(new FileInputStream(ImageFileNameWalk.get()));
-                Image characterImage = new Image(new FileInputStream(ImageFileNameCharacter.get()));
-                Image EndImage = new Image(new FileInputStream(ImageFileNameEnd.get()));
+
+                Image wallImage = new Image(ClassLoader.getSystemResourceAsStream("Images/wall4.jpg"));
+                Image walkImage = new Image(ClassLoader.getSystemResourceAsStream("Images/walk.jpg"));
+                Image characterImage = new Image(ClassLoader.getSystemResourceAsStream("Images/character4.jpg"));
+                Image EndImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Moltres.jpg"));
 
                 GraphicsContext gc = getGraphicsContext2D();
                 gc.clearRect(0, 0, getWidth(), getHeight());
@@ -85,9 +85,7 @@ public class MazeDisplayer extends Canvas {
                     }
                 }
                 gc.drawImage(characterImage, characterPositionColumn * cellsize, characterPositionRow * cellsize, cellsize, cellsize);
-            } catch (FileNotFoundException e) {
-                //e.printStackTrace();
-            }
+
         }
     }
 
@@ -99,17 +97,14 @@ public class MazeDisplayer extends Canvas {
             double cellWidth = canvasWidth / maze[0].length;
             double cellsize = Math.min(cellHeight,cellWidth);
 
-            try {
-                Image SolutionImage = new Image(new FileInputStream(ImageFileNameSolution.get()));
+                Image SolutionImage = new Image(ClassLoader.getSystemResourceAsStream("Images/pokemon/Pikachu.jpg"));
                 GraphicsContext gc = getGraphicsContext2D();
                 //Draw Maze
                 for (int i = 0; i < solution.size() - 1; i++) {
                     if (!solution.get(i).equals(new Pair<>(characterPositionRow,characterPositionColumn)))
                         gc.drawImage(SolutionImage, solution.get(i).getValue() * cellsize, solution.get(i).getKey() * cellsize, cellsize, cellsize);
                 }
-            } catch (FileNotFoundException e) {
                 //e.printStackTrace();
-            }
         }
 
     }

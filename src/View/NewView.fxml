@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="639.0" snapToPixel="false" stylesheets="NewStyle.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.NewView">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="639.0" snapToPixel="false"  xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.NewView">
    <children>
       <GridPane fx:id="advanced_choose" layoutX="151.0" layoutY="303.0" prefHeight="51.0" prefWidth="335.0">
         <columnConstraints>
@@ -34,8 +34,8 @@
          <children>
             <Label text="Maze row:" />
             <Label text="Maze column:" GridPane.rowIndex="2" />
-            <TextField fx:id="text_rowNum" onKeyPressed="#ValidNumber" promptText="Insert row size" GridPane.columnIndex="1" />
-            <TextField fx:id="text_columnNum" onKeyPressed="#ValidNumber" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="text_rowNum"  promptText="Insert row size" GridPane.columnIndex="1" />
+            <TextField fx:id="text_columnNum" promptText="Insert column num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Button fx:id="next" ellipsisString="" layoutX="264.0" layoutY="375.0" mnemonicParsing="false" onAction="#StartGame" prefHeight="25.0" prefWidth="74.0" text="next" />

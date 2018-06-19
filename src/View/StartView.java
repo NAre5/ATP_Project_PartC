@@ -28,7 +28,7 @@ public class StartView extends AView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        System.out.println("hi i am here");
     }
 
     @Override
@@ -42,7 +42,8 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void createNewMaze(ActionEvent actionEvent) {
-        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
+//        viewModel.switchScene((Stage) NEW.getScene().getWindow(), "New");
+        switchScene((Stage) NEW.getScene().getWindow(), "New");
     }
 
     /**
@@ -63,7 +64,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openHelp(ActionEvent actionEvent) {
-        viewModel.raiseStage("Help");
+        raiseStage("Help");
     }
 
     /**
@@ -72,7 +73,7 @@ public class StartView extends AView implements Initializable {
      * @param actionEvent
      */
     public void openAbout(ActionEvent actionEvent) {
-        viewModel.raiseStage("About");
+        raiseStage("About");
     }
 
     @Override
